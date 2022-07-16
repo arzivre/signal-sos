@@ -8,7 +8,7 @@ const SignalList = () => {
 
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
-  
+
   return (
     <section>
       {data.map((signal: Signal) => (
@@ -19,6 +19,3 @@ const SignalList = () => {
 }
 
 export default SignalList
-function req(req: any, arg1: string): { protocol: any; host: any } {
-  throw new Error('Function not implemented.')
-}
