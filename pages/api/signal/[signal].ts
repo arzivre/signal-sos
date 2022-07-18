@@ -11,19 +11,19 @@ export default async function handler(
 ) {
   try {
     const signal = req.query.signal?.toString()
-
+    console.log('signal', signal)
     if (req.method === 'POST') {
       if (signal === 'join-signal') {
-        await joinSignal(req, res)
+        return await joinSignal(req, res)
       }
       await createSignal(req, res)
     }
     if (req.method === 'GET') {
       if (signal === 'get-first-item') {
-        await getFirstSignal(req, res)
+        return await getFirstSignal(req, res)
       }
       if (signal === 'get-detail-signal') {
-        await getDetailSignal(req, res)
+        return await getDetailSignal(req, res)
       }
       await getAllSignal(req, res)
     }
@@ -34,6 +34,8 @@ export default async function handler(
 }
 
 const createSignal = async (req: NextApiRequest, res: NextApiResponse) => {
+  console.log('BODY [', req.body, ']')
+
   const user = await prisma.signal.create({
     data: {
       id: cuid(),
@@ -45,7 +47,6 @@ const createSignal = async (req: NextApiRequest, res: NextApiResponse) => {
 
 const joinSignal = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getServerSession(req, res, nextAuthOptions)
-
   const user = await prisma.people.create({
     data: {
       id: cuid(),

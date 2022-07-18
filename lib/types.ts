@@ -10,11 +10,15 @@ export interface Signal {
   description?: string
   created_at?: Date
   updated_at?: Date
+  people?: People[]
 }
 
 export interface People {
   id: string
-  type: string
+  userId: string
+  signalId: string
+  status: boolean
+  type: 'shelter' | 'sos'
   name: string
-  email: string
+  items: string
 }
