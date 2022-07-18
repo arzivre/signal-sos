@@ -1,11 +1,29 @@
 import Link from 'next/link'
-import { signOut } from 'next-auth/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
 import Loader from './Loader'
 
-const Avatar: React.FC<{ name: string }> = ({ name }) => {
+const Avatar: React.FC = () => {
+  const { data: session, status } = useSession()
+  const user = session?.user
+  
+  if (status === 'loading') {
+    return (
+      <li>
+        <Loader />
+      </li>
+    )
+  }
+  if (status === 'unauthenticated') {
+    return (
+      <li>
+        <button onClick={() => signIn()}>Sign In to Create Signal</button>
+      </li>
+    )
+  }
+
   return (
     <>
-      <li>{name}</li>
+      <li>{user?.name || user?.email}</li>
       <li>
         <Link href='/user/create'>
           <a>Create Signal</a>

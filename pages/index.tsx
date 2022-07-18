@@ -1,4 +1,5 @@
 import Layout from 'components/Layout'
+import SignalDetailCard from 'components/SignalDetailCard'
 import SignalList from 'components/SignalList'
 import type { NextPage } from 'next'
 import Head from 'next/head'
@@ -16,12 +17,7 @@ const Home: NextPage = () => {
         <h1 className='mb-8 text-[calc(1em+8vh)] font-serif'>Signal</h1>
         <div className='container mx-auto grid grid-cols-1 md:grid-cols-2 md:gap-8'>
           <SignalList />
-          <section>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque quasi
-            suscipit soluta nam reiciendis vitae reprehenderit recusandae hic
-            accusantium vel. Totam esse consectetur aut porro omnis voluptatibus
-            nam magni exercitationem?
-          </section>
+          <SignalDetailCard />
         </div>
       </Layout>
     </>

@@ -14,10 +14,11 @@ datasource db {
 
 model People {
     id       String  @id @default(cuid())
-    signalId String?
+    signalId String
+    userId   String
     type     String
     name     String
-    email    String
+    items    String
     Signal   Signal? @relation(fields: [signalId], references: [id])
 }
 

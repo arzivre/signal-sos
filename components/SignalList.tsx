@@ -4,7 +4,7 @@ import useSWR from 'swr'
 import fetcher from 'lib/fetcher'
 
 const SignalList = () => {
-  const { data, error } = useSWR<[Signal]>('/api/signal/123', fetcher)
+  const { data=[], error } = useSWR<[Signal]>('/api/signal/123', fetcher)
 
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
