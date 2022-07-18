@@ -58,7 +58,11 @@ const joinSignal = async (req: NextApiRequest, res: NextApiResponse) => {
 }
 
 const getAllSignal = async (req: NextApiRequest, res: NextApiResponse) => {
-  const signal = await prisma.signal.findMany()
+  const signal = await prisma.signal.findMany({
+    where: {
+      status: true,
+    },
+  })
 
   res.status(200).json(signal)
 }

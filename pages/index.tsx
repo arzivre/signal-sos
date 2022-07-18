@@ -17,7 +17,7 @@ const Home: NextPage = () => {
         <h1 className='mb-8 text-[calc(1em+8vh)] font-serif'>Signal</h1>
         <div className='container mx-auto grid grid-cols-1 md:grid-cols-2 md:gap-8'>
           <SignalList />
-          <SignalDetailCard />
+          {/* <SignalDetailCard /> */}
         </div>
       </Layout>
     </>

@@ -3,11 +3,19 @@ import { Signal } from 'lib/types'
 import useSWR from 'swr'
 import FormPeopleJoinSignal from './FormPeopleJoinSignal'
 
-const SignalDetailCard = () => {
+const SignalDetailCard: React.FC<Signal> = ({
+  status,
+  title,
+  author,
+  necessity,
+  location,
+  type,
+  id,
+}) => {
   const { data, error } = useSWR<[Signal]>('/api/signal/123', fetcher)
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
-  const { status, title, author, necessity, location, type, id } = data[0]
+  // const { status, title, author, necessity, location, type, id } = data[0]
   return (
     <div className='w-full m-4 border-4'>
       <p>{id}</p>
