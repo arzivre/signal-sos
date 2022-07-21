@@ -1,22 +1,54 @@
-// Example of a restricted endpoint that only authenticated users can access from https://next-auth.js.org/getting-started/example
-
+import cuid from 'cuid'
+import { prisma } from 'lib/prisma'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { unstable_getServerSession as getServerSession } from 'next-auth'
 import { authOptions as nextAuthOptions } from '../auth/[...nextauth]'
 
-const restricted = async (req: NextApiRequest, res: NextApiResponse) => {
-  const session = await getServerSession(req, res, nextAuthOptions)
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  console.log(req.headers['token'])
+  let people = req.query.people as string
 
-  if (session) {
-    res.send({
-      content:
-        'This is protected content. You can access this content because you are signed in.',
-    })
-  } else {
-    res.send({
-      error: 'You must be sign in to view the protected content on this page.',
-    })
+  try {
+    if (req.method === 'GET') {
+      await getAllPeopleJoinSignal(req, res, people as string)
+    }
+    if (req.method === 'POST') {
+      await peopleJoinSignal(req, res, people)
+    }
+  } catch (error: any) {
+    console.error(`Request error: [${error}]`)
+    res.status(500).json({ message: error.message })
   }
 }
 
-export default restricted
+const getAllPeopleJoinSignal = async (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  people?: string
+) => {
+  const data = await prisma.people.findMany({
+    where: {
+      signalId: people,
+    },
+  })
+  res.status(200).json(data)
+}
+
+const peopleJoinSignal = async (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  people?: string
+) => {
+  const session = await getServerSession(req, res, nextAuthOptions)
+  const user = await prisma.people.create({
+    data: {
+      id: cuid(),
+      userId: session?.user?.id,
+      ...req.body,
+    },
+  })
+  res.status(200).json(user)
+}

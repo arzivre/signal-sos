@@ -18,7 +18,9 @@ export interface People {
   userId: string
   signalId: string
   status: boolean
-  type: 'shelter' | 'sos'
+  type: SignalType
   name: string
   items: string
 }
+
+export type SignalType = 'shelter' | 'sos'

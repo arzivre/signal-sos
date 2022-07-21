@@ -1,10 +1,11 @@
-import Header from './Header'
 import Head from 'next/head'
+import Header from './Header'
+
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <>
       <Head>
-        <title>reach signal</title>
+        <title>signal sos</title>
       </Head>
 
       <Header />
