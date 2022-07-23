@@ -1,7 +1,8 @@
 {
   "name": "reach-signal-sos",
-  "version": "0.1.0",
+  "license": "MIT",
   "private": true,
+  "version": "1.0.0",
   "scripts": {
     "dev": "next dev",
     "dev:debug": "cross-env NODE_OPTIONS='--inspect' next dev",

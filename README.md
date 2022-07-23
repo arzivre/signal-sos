@@ -1,47 +1,38 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Signal SOS
+What is this repo or project?
+web to help team rescue or people where to go , or tell survivor you provide shellter and other help and nesecesity
+How does it work?
+create signal sos or shellter, team rescue will go to signal sos and survivo will gather to shellter
+Who will use this repo or project?
+team recue , voulentessr, survivor
+What is the goal of this project?
+connect people team rescue survivor when natural disasster happen, crissis
 
-## Getting Started
+## Tech Stack
+Framework: Next.js
+Database: PlanetScale
+ORM: Prisma
+Authentication: NextAuth.js
+Styling: Tailwind CSS
+Deployment: Vercel
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
+## Installation
+```
+git clone https://github.com/arzivre/signal-sos
+cd signal-sos
+yarn
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Environment Variables
+To run this project, you will need create a .env file similar to .env.example.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Author
+Muhammad Sony Fauzi
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Hashnode post:
+Website: https://www.arzivre.com
+Twitter: @arzivre
+Github: @arzivre
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-TODO:
-show all active signal shletr and sos
-
-find first post
-
-```javascript
-  const findUser = await prisma.signal.findFirst({
-    orderBy: {
-      id: "desc"
-    }
-  })
-```
+Give a ⭐️ if this project helped you!
