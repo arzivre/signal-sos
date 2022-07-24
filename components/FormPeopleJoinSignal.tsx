@@ -1,14 +1,12 @@
-import { People, SignalType } from 'lib/types'
+import type { People, TypeSignal } from '@prisma/client'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-interface PeopleForm extends People {
-  signalId: string
-}
+type PeopleForm = People
 
 const FormPeopleJoinSignal: React.FC<{
   id: string
-  type: SignalType
+  type: TypeSignal
   isJoined: People | undefined
 }> = ({ id, type, isJoined }) => {
   const [showForm, setShowForm] = useState(false)

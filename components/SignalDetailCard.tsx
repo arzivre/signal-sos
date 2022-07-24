@@ -1,5 +1,5 @@
 import fetcher from 'lib/fetcher'
-import { People, Signal } from 'lib/types'
+import { People, Signal } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 import { Suspense } from 'react'
 import useSWR from 'swr'

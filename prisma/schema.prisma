@@ -13,30 +13,35 @@ datasource db {
 }
 
 model People {
-    id       String  @id @default(cuid())
+    id       String     @id @default(cuid())
     signalId String
     userId   String
-    type     String
+    type     TypeSignal @default(sos)
     name     String
     items    String
-    Signal   Signal? @relation(fields: [signalId], references: [id])
+    Signal   Signal?    @relation(fields: [signalId], references: [id])
 }
 
 model Signal {
-    id          String    @id @default(cuid())
+    id          String     @id @default(cuid())
     userId      String
     status      Boolean
-    type        String
+    type        TypeSignal @default(sos)
     author      String
     title       String
     location    String?
     latlong     String?
     necessity   String
     description String?
-    created_at  DateTime? @default(now())
+    created_at  DateTime?  @default(now())
     updated_at  DateTime?
     people      People[]
-    user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum TypeSignal {
+    sos
+    shelter
 }
 
 //!  for Next auth
