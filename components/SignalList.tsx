@@ -1,16 +1,17 @@
 import fetcher from 'lib/fetcher'
 import { useSession } from 'next-auth/react'
-import { Suspense } from 'react'
+import { Suspense, useState } from 'react'
 import useSWR from 'swr'
 import { proxy, useSnapshot } from 'valtio'
 import FormPeopleJoinSignal from './FormPeopleJoinSignal'
 import Loader from './Loader'
 import type { People, Signal } from '@prisma/client'
 
-const state = proxy<{
+interface StateProps {
   index: number
   selectIndex: (id: number) => void
-}>({
+}
+const state = proxy<StateProps>({
   index: 0,
   selectIndex: (id: number) => {
     state.index = id
@@ -20,7 +21,6 @@ const state = proxy<{
 function useSelectSignal() {
   return useSnapshot(state)
 }
-
 
 const SignalDetailCard: React.FC<Signal> = ({
   title,
@@ -41,20 +41,21 @@ const SignalDetailCard: React.FC<Signal> = ({
     (data) => data.userId === session?.user?.id
   )
 
+  if (!id) <Loader />
   if (error) return <div>failed to load</div>
 
   return (
-    <div className='w-full m-4 border-4'>
+    <div className='m-4 w-full border-4'>
       <Suspense fallback={<Loader />}>
         <h1 className='text-4xl'>{type}</h1>
         <p>{title}</p>
         <p>{author}</p>
         <p>{necessity}</p>
         <p>{location}</p>
-        <p>People</p>
+        <p>People Joined</p>
         <ul className='grid grid-cols-[auto_auto_auto_auto]'>
           {people?.map(({ id, name }) => (
-            <li key={id} title={name} className='px-4 rounded-sm'>
+            <li key={id} title={name} className='rounded-sm px-4'>
               <p>{name}</p>
             </li>
           ))}
@@ -62,7 +63,7 @@ const SignalDetailCard: React.FC<Signal> = ({
         <p>Items Donated</p>
         <ul className='grid grid-cols-[auto_auto_auto_auto]'>
           {people?.map(({ id, items }) => (
-            <li key={id} title={items} className='px-4 rounded-sm'>
+            <li key={id} title={items} className='rounded-sm px-4'>
               <p>{items}</p>
             </li>
           ))}
@@ -80,39 +81,62 @@ const SignalCard: React.FC<Signal> = ({
   necessity,
   location,
   type,
+  id,
 }) => {
   return (
-    <>
+    <li>
+      <p>{id}</p>
       <p>{type}</p>
       <p>{title}</p>
       <p>{author}</p>
       <p>{necessity}</p>
       <p>{location}</p>
-    </>
+    </li>
   )
 }
 
 const SignalList = () => {
-  const { data = [], error } = useSWR<[Signal]>('/api/signal/123', fetcher)
-  const { index, selectIndex } = useSelectSignal()
+  const [paginationIndex, setPaginationIndex] = useState(0)
+  const { index, selectIndex } = useSelectSignal() //* Valtio Global State
+
+  const { data = [], error } = useSWR<[Signal]>(
+    `/api/signal/${paginationIndex}`,
+    fetcher
+  )
 
   if (error) return <div>failed to load</div>
 
   return (
     <>
-      <Suspense fallback={<Loader />}>
-        <section>
+      <section>
+        <Suspense fallback={<Loader />}>
           {data.map((signal, index) => (
-            <div
+            <ul
               key={signal.id}
               onClick={() => selectIndex(index)}
-              className='w-full m-4 border-4 hover:border-green-400'
+              className='m-4 w-full border-4 hover:border-green-400'
             >
               <SignalCard {...signal} />
-            </div>
+            </ul>
           ))}
-        </section>
-      </Suspense>
+        </Suspense>
+        <div className='mx-4  grid grid-cols-[1fr_auto_1fr] text-center'>
+          {paginationIndex > 0 ? (
+            <button onClick={() => setPaginationIndex(paginationIndex - 1)}>
+              Previous
+            </button>
+          ) : (
+            <div />
+          )}
+          {paginationIndex > 0 ? <p> {paginationIndex + 1} </p> : <p>1</p>}
+          <button
+            disabled={data.length === 0}
+            onClick={() => setPaginationIndex(paginationIndex + 1)}
+          >
+            Next
+          </button>
+        </div>
+      </section>
 
       <Suspense fallback={<Loader />}>
         <SignalDetailCard {...data[index]!} />

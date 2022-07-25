@@ -11,9 +11,9 @@ export default async function handler(
   console.log(req.headers['token'])
 
   try {
-    // if (req.method === 'POST') {
-    //   await createSignal(req, res)
-    // }
+    if (req.method === 'POST') {
+      await createSignal(req, res)
+    }
     if (req.method === 'GET') {
       await getAllUserSignal(req, res)
     }
@@ -23,21 +23,28 @@ export default async function handler(
   }
 }
 
-// const createSignal = async (req: NextApiRequest, res: NextApiResponse) => {
-//   const user = await prisma.signal.create({
-//     data: {
-//       id: cuid(),
-//       ...req.body,
-//     },
-//   })
-//   res.status(200).json(user)
-// }
+const createSignal = async (req: NextApiRequest, res: NextApiResponse) => {
+  const user = await prisma.signal.create({
+    data: {
+      id: cuid(),
+      ...req.body,
+    },
+  })
+  res.status(200).json(user)
+}
 
 const getAllUserSignal = async (req: NextApiRequest, res: NextApiResponse) => {
-  console.log(req.headers['token'])
   const session = await getServerSession(req, res, nextAuthOptions)
 
+  const userQuery = req.query.user?.toString()
+  const pagination = Number(userQuery) * 4
+
   const user = await prisma.signal.findMany({
+    skip: 1 * pagination,
+    take: 4,
+    orderBy: {
+      id: 'desc',
+    },
     where: {
       userId: session?.user?.id,
     },

@@ -1,9 +1,9 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { NextApiRequest, NextApiResponse } from 'next'
+import cuid from 'cuid'
 import { prisma } from 'lib/prisma'
+import { NextApiRequest, NextApiResponse } from 'next'
 import { unstable_getServerSession as getServerSession } from 'next-auth'
 import { authOptions as nextAuthOptions } from '../auth/[...nextauth]'
-import cuid from 'cuid'
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,31 +11,24 @@ export default async function handler(
 ) {
   try {
     const signal = req.query.signal?.toString()
-    console.log('signal', signal)
+
     if (req.method === 'POST') {
       if (signal === 'join-signal') {
         return await joinSignal(req, res)
       }
       await createSignal(req, res)
     }
+
     if (req.method === 'GET') {
-      if (signal === 'get-first-item') {
-        return await getFirstSignal(req, res)
-      }
-      if (signal === 'get-detail-signal') {
-        return await getDetailSignal(req, res)
-      }
       await getAllSignal(req, res)
     }
-  } catch (error: any) {
-    console.error(`Request error: [${error}]`)
-    res.status(500).json({ message: error.message })
+  } catch (error) {
+    console.error(`REQUEST ERROR: [${error}]`)
+    res.status(500).json({ error: error })
   }
 }
 
 const createSignal = async (req: NextApiRequest, res: NextApiResponse) => {
-  console.log('BODY [', req.body, ']')
-
   const user = await prisma.signal.create({
     data: {
       id: cuid(),
@@ -58,30 +51,38 @@ const joinSignal = async (req: NextApiRequest, res: NextApiResponse) => {
 }
 
 const getAllSignal = async (req: NextApiRequest, res: NextApiResponse) => {
+  const signalQuery = req.query.signal?.toString()
+  const pagination = Number(signalQuery) * 5 // 1*5=5 2*5=10
+
   const signal = await prisma.signal.findMany({
+    skip: 1 * pagination,
+    take: 5,
     where: {
       status: true,
     },
-  })
-
-  res.status(200).json(signal)
-}
-
-const getFirstSignal = async (req: NextApiRequest, res: NextApiResponse) => {
-  const id = req.query.signal?.toString()
-  const signal = await prisma.signal.findFirst({
     orderBy: {
-      created_at: 'desc',
+      id: 'desc',
     },
   })
+
   res.status(200).json(signal)
 }
 
-const getDetailSignal = async (req: NextApiRequest, res: NextApiResponse) => {
-  const signal = await prisma.signal.findUnique({
-    where: {
-      id: req.headers['token']?.toString(),
-    },
-  })
-  res.status(200).json(signal)
-}
+// const getFirstSignal = async (req: NextApiRequest, res: NextApiResponse) => {
+//   const id = req.query.signal?.toString()
+//   const signal = await prisma.signal.findFirst({
+//     orderBy: {
+//       created_at: 'desc',
+//     },
+//   })
+//   res.status(200).json(signal)
+// }
+
+// const getDetailSignal = async (req: NextApiRequest, res: NextApiResponse) => {
+//   const signal = await prisma.signal.findUnique({
+//     where: {
+//       id: req.headers['token']?.toString(),
+//     },
+//   })
+//   res.status(200).json(signal)
+// }
