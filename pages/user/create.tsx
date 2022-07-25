@@ -12,7 +12,7 @@ const CreateSignalPage = () => {
       </Head>
 
       <Layout>
-        <main className='container mx-auto max-w-6xl px-4'>
+        <main className='container mx-auto max-w-7xl px-4'>
           <h1 className='mb-8 text-[calc(1em+8vh)] font-serif'>
             Create Signal
           </h1>

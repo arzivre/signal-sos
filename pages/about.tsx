@@ -11,8 +11,8 @@ const AboutPage = () => {
       </Head>
 
       <Layout>
-        <main className='container mx-auto max-w-6xl'>
-          <h1 className='mb-8 text-[calc(1em+8vh)] font-serif'>About</h1>
+        <main className='container mx-auto max-w-7xl px-4 text-2xl my-10'>
+          <h1 className='mb-8 font-serif text-[calc(1em+8vh)]'>About</h1>
           <p>
             this web app is made to connect comunity when somtehing like natural
             disaster happen, or just any individual need help from people

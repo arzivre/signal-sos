@@ -50,12 +50,12 @@ const User: React.FC = () => {
 const Header = () => {
   return (
     <div className='sticky top-0 bg-gray-100'>
-      <header className='container mx-auto px-4 max-w-6xl'>
+      <header className='container mx-auto max-w-7xl px-4'>
         <h1 className='mb-1 text-[calc(1em+2vh)] md:hidden'>Reach Signal</h1>
 
-        <h1 className='hidden text-[calc(1em+2vh)] md:block'>Reach Signal</h1>
-        <nav className='flex justify-between'>
-          <ul className='flex gap-6 items-center'>
+        <nav className=''>
+          <h1 className='hidden text-[calc(1em+2vh)] md:block'>Reach Signal</h1>
+          <ul className='grid grid-cols-[1fr_auto] whitespace-nowrap md:flex md:justify-start gap-x-6'>
             <li>
               <Link href='/'>
                 <a>Home</a>

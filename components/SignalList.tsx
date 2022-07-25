@@ -45,7 +45,7 @@ const SignalDetailCard: React.FC<Signal> = ({
   if (error) return <div>failed to load</div>
 
   return (
-    <div className='m-4 w-full border-4'>
+    <div className='mx-auto w-full border-4 px-4'>
       <Suspense fallback={<Loader />}>
         <h1 className='text-4xl'>{type}</h1>
         <p>{title}</p>
@@ -108,13 +108,13 @@ const SignalList = () => {
 
   return (
     <>
-      <section>
+      <section className='mx-4'>
         <Suspense fallback={<Loader />}>
           {data.map((signal, index) => (
             <ul
               key={signal.id}
               onClick={() => selectIndex(index)}
-              className='m-4 w-full border-4 hover:border-green-400'
+              className='mx-auto px-4 w-full border-4 hover:border-green-400'
             >
               <SignalCard {...signal} />
             </ul>
