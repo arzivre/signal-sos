@@ -19,9 +19,71 @@ const SignalCard = ({ title, author, necessity, location }: Signal) => {
   )
 }
 
-const SignalUserList = () => {
+const UserJoinedSignal = () => {
+  const [indexJoinedSignal, setIndexJoinedSignal] = useState(0)
+
+  const { data = [], error } = useSWR<[Signal]>(
+    `/api/user/joined?&id=${indexJoinedSignal}`,
+    fetcher
+  )
+
+  if (error) return <div>failed to load</div>
+
+  if (!data) return <div>loading...</div>
+  return (
+    <>
+      <h2 className='mb-8 font-serif text-[calc(1em+2vw)]'>Joined Signal</h2>
+
+      {data.length > 0 ? (
+        <>
+          <section className='grid grid-cols-2 md:gap-x-8'>
+            {data.map((signal) => (
+              <SignalCard key={signal.id} {...signal} />
+            ))}
+          </section>
+          <div className='mx-4  grid grid-cols-[1fr_auto_1fr] text-center'>
+            {indexJoinedSignal > 0 ? (
+              <button
+                onClick={() => setIndexJoinedSignal(indexJoinedSignal - 1)}
+              >
+                Previous
+              </button>
+            ) : (
+              <div />
+            )}
+            {indexJoinedSignal > 0 ? (
+              <p> {indexJoinedSignal + 1} </p>
+            ) : (
+              <p>1</p>
+            )}
+            {data.length > 0 && (
+              <button
+                disabled={data.length === 0}
+                onClick={() => setIndexJoinedSignal(indexJoinedSignal + 1)}
+              >
+                Next
+              </button>
+            )}
+          </div>
+        </>
+      ) : (
+        <div>
+          <p>No Data</p>
+          {indexJoinedSignal > 0 ? (
+            <button onClick={() => setIndexJoinedSignal(indexJoinedSignal - 1)}>
+              Go Back
+            </button>
+          ) : (
+            <div />
+          )}
+        </div>
+      )}
+    </>
+  )
+}
+
+const UserCreatedSignal = () => {
   const [paginationIndex, setPaginationIndex] = useState(0)
-  const { data: session, status } = useSession()
 
   const { data = [], error } = useSWR<[Signal]>(
     `/api/user/${paginationIndex}`,
@@ -29,10 +91,13 @@ const SignalUserList = () => {
   )
 
   if (error) return <div>failed to load</div>
-  if (!data || status === 'loading') return <div>loading...</div>
+
+  if (!data) return <div>loading...</div>
 
   return (
     <>
+      <h2 className='mb-8 font-serif text-[calc(1em+2vw)]'>Yuor Signal</h2>
+
       <section className='grid grid-cols-2 md:gap-x-8'>
         {data.map((signal) => (
           <SignalCard key={signal.id} {...signal} />
@@ -47,12 +112,14 @@ const SignalUserList = () => {
           <div />
         )}
         {paginationIndex > 0 ? <p> {paginationIndex + 1} </p> : <p>1</p>}
-        <button
-          disabled={data.length === 0}
-          onClick={() => setPaginationIndex(paginationIndex + 1)}
-        >
-          Next
-        </button>
+        {data.length > 0 && (
+          <button
+            disabled={data.length === 0}
+            onClick={() => setPaginationIndex(paginationIndex + 1)}
+          >
+            Next
+          </button>
+        )}
       </div>
     </>
   )
@@ -66,10 +133,16 @@ const UserSignalPage: NextPage = () => {
       </Head>
 
       <Layout>
-        <main className='container mx-auto'>
-          <h1 className='mb-8 font-serif text-[calc(1em+8vh)]'>Signal</h1>
+        <main role='main' className='container mx-auto'>
+          <h1 className='mb-8 font-serif text-[calc(1em+3vw)]'>User Signal</h1>
           <Suspense fallback={<Loader />}>
-            <SignalUserList />
+            <Suspense fallback={<Loader />}>
+              <UserJoinedSignal />
+            </Suspense>
+
+            <Suspense fallback={<Loader />}>
+              <UserCreatedSignal />
+            </Suspense>
           </Suspense>
         </main>
       </Layout>
