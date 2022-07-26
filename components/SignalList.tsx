@@ -6,6 +6,11 @@ import { proxy, useSnapshot } from 'valtio'
 import FormPeopleJoinSignal from './FormPeopleJoinSignal'
 import Loader from './Loader'
 import type { People, Signal } from '@prisma/client'
+import dynamic from 'next/dynamic'
+
+const LazyMap = dynamic(() => {return import('components/Map')},
+  { ssr: false }
+)
 
 interface StateProps {
   index: number
@@ -47,6 +52,7 @@ const SignalDetailCard: React.FC<Signal> = ({
   return (
     <div className='mx-auto w-full border-4 px-4'>
       <Suspense fallback={<Loader />}>
+        <LazyMap />
         <h1 className='text-4xl'>{type}</h1>
         <p>{title}</p>
         <p>{author}</p>
@@ -68,7 +74,6 @@ const SignalDetailCard: React.FC<Signal> = ({
             </li>
           ))}
         </ul>
-
         <FormPeopleJoinSignal id={id} type={type} isJoined={isJoined} />
       </Suspense>
     </div>
@@ -114,7 +119,7 @@ const SignalList = () => {
             <ul
               key={signal.id}
               onClick={() => selectIndex(index)}
-              className='mx-auto px-4 w-full border-4 hover:border-green-400'
+              className='mx-auto w-full border-4 px-4 hover:border-green-400'
             >
               <SignalCard {...signal} />
             </ul>
