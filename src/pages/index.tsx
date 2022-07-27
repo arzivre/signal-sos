@@ -1,5 +1,5 @@
-import Layout from 'components/Layout'
-import SignalList from 'components/SignalList'
+import Layout from 'src/components/Layout'
+import SignalList from 'src/components/SignalList'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 

@@ -1,12 +1,19 @@
 import type { Signal } from '@prisma/client'
-import Layout from 'components/Layout'
-import Loader from 'components/Loader'
-import fetcher from 'lib/fetcher'
+import Layout from 'src/components/Layout'
+import Loader from 'src/components/Loader'
 import type { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { Suspense, useState } from 'react'
 import useSWR from 'swr'
+
+async function fetcher<JSON = any>(
+  input: RequestInfo,
+  init?: RequestInit
+): Promise<JSON> {
+  const res = await fetch(input, init)
+  return res.json()
+}
 
 const SignalCard = ({ title, author, necessity, location }: Signal) => {
   return (

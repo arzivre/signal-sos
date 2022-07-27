@@ -1,4 +1,4 @@
-import fetcher from 'lib/fetcher'
+
 import { useSession } from 'next-auth/react'
 import { Suspense, useState } from 'react'
 import useSWR from 'swr'
@@ -8,7 +8,7 @@ import Loader from './Loader'
 import type { People, Signal } from '@prisma/client'
 import dynamic from 'next/dynamic'
 
-const LazyMap = dynamic(() => {return import('components/Map')},
+const LazyMap = dynamic(() => {return import('src/components/Map')},
   { ssr: false }
 )
 
@@ -26,6 +26,15 @@ const state = proxy<StateProps>({
 function useSelectSignal() {
   return useSnapshot(state)
 }
+
+async function fetcher<JSON = any>(
+  input: RequestInfo,
+  init?: RequestInit
+): Promise<JSON> {
+  const res = await fetch(input, init)
+  return res.json()
+}
+
 
 const SignalDetailCard: React.FC<Signal> = ({
   title,

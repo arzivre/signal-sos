@@ -1,6 +1,6 @@
 import { Signal as SignalFormInput } from '@prisma/client'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import Loader from 'components/Loader'
+import Loader from 'src/components/Loader'
 import { useSession } from 'next-auth/react'
 
 const FormCreateSignal = () => {

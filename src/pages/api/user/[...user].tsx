@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { prisma } from 'lib/prisma'
+import { prisma } from 'src/server/prisma'
 import { unstable_getServerSession as getServerSession } from 'next-auth'
 import { authOptions as nextAuthOptions } from '../auth/[...nextauth]'
 import cuid from 'cuid'

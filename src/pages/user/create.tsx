@@ -1,6 +1,6 @@
 import Head from 'next/head'
-import Layout from 'components/Layout'
-import FormCreateSignal from 'components/FormCreateSignal'
+import Layout from 'src/components/Layout'
+import FormCreateSignal from 'src/components/FormCreateSignal'
 
 const CreateSignalPage = () => {
   return (

@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic'
 
-const LazyMap = dynamic(() => {return import('components/Map') },
+const LazyMap = dynamic(() => {return import('src/components/Map') },
   { ssr: false }
 )
 

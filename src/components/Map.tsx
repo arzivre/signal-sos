@@ -1,4 +1,5 @@
-import Leaflet, { LatLngExpression } from 'leaflet'
+import type { LatLngExpression } from 'leaflet'
+import Leaflet from 'leaflet'
 import { useEffect } from 'react'
 import { MapContainer, Marker, TileLayer, useMap } from 'react-leaflet'
 
@@ -27,14 +28,16 @@ const Map = ({ position = DEFAULT }: { position?: LatLngExpression }) => {
   }, [])
 
   return (
-    <MapContainer center={position} zoom={12} style={{ height: '50vh' }}>
-      <TileLayer
-        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-      />
-      {position && <Marker position={position} />}
-      <ChangeView coords={position} />
-    </MapContainer>
+    <>
+      <MapContainer center={position} zoom={12} style={{ height: '50vh' }}>
+        <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        />
+        {position && <Marker position={position} />}
+        <ChangeView coords={position} />
+      </MapContainer>
+    </>
   )
 }
 export default Map
