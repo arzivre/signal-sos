@@ -9,14 +9,15 @@ What is the goal of this project?
 connect people team rescue survivor when natural disasster happen, crissis
 
 ## Tech Stack
-Framework: Next.js
-Database: PlanetScale
-ORM: Prisma
-Authentication: NextAuth.js
-Styling: Tailwind CSS
-Deployment: Vercel
+- **Framework**: [Next.js](https://nextjs.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Database**: [PlanetScale](https://planetscale.com)
+- **ORM**: [Prisma](https://prisma.io/)
+- **Authentication**: [NextAuth.js](https://next-auth.js.org/)
+- **Map**: [Leaflet](https://leafletjs.com/), [react-leaflet](https://react-leaflet.js.org/)
+- **Deployment**: [Vercel](https://vercel.com)
 
-## Installation
+## Running Locally
 ```
 git clone https://github.com/arzivre/signal-sos
 cd signal-sos
