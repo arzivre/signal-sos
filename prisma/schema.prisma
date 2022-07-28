@@ -30,7 +30,8 @@ model Signal {
     author      String
     title       String
     location    String?
-    latlong     String?
+    lat         String?
+    long        String?
     necessity   String
     description String?
     created_at  DateTime?  @default(now())

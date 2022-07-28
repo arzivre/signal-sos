@@ -1,4 +1,3 @@
-
 import { useSession } from 'next-auth/react'
 import { Suspense, useState } from 'react'
 import useSWR from 'swr'
@@ -8,7 +7,10 @@ import Loader from './Loader'
 import type { People, Signal } from '@prisma/client'
 import dynamic from 'next/dynamic'
 
-const LazyMap = dynamic(() => {return import('src/components/Map')},
+const LazyMap = dynamic(
+  () => {
+    return import('src/components/Map')
+  },
   { ssr: false }
 )
 
@@ -35,7 +37,6 @@ async function fetcher<JSON = any>(
   return res.json()
 }
 
-
 const SignalDetailCard: React.FC<Signal> = ({
   title,
   author,
@@ -43,6 +44,8 @@ const SignalDetailCard: React.FC<Signal> = ({
   location,
   type,
   id,
+  lat,
+  long,
 }) => {
   const { data: session } = useSession()
 
@@ -55,18 +58,22 @@ const SignalDetailCard: React.FC<Signal> = ({
     (data) => data.userId === session?.user?.id
   )
 
-  if (!id) <Loader />
+  if (!id) return <Loader />
+
   if (error) return <div>failed to load</div>
 
   return (
     <div className='mx-auto w-full border-4 px-4'>
       <Suspense fallback={<Loader />}>
-        <LazyMap />
+        {lat && long && <LazyMap position={[Number(lat), Number(long)]} />}
         <h1 className='text-4xl'>{type}</h1>
         <p>{title}</p>
         <p>{author}</p>
         <p>{necessity}</p>
         <p>{location}</p>
+        <p>
+          Latidude: {lat}, Longitude:{long}
+        </p>
         <p>People Joined</p>
         <ul className='grid grid-cols-[auto_auto_auto_auto]'>
           {people?.map(({ id, name }) => (

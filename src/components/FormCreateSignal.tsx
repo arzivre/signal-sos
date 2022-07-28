@@ -2,9 +2,22 @@ import { Signal as SignalFormInput } from '@prisma/client'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import Loader from 'src/components/Loader'
 import { useSession } from 'next-auth/react'
+import { useState } from 'react'
 
+interface GeoLocation {
+  status: string
+  lat?: number
+  long?: number
+}
 const FormCreateSignal = () => {
   const { data: session, status } = useSession()
+
+  const [geoLocation, setGeoLocation] = useState<GeoLocation>({
+    status: 'loading',
+    long: 51.505,
+    lat: -0.09,
+  })
+
   const {
     reset,
     register,
@@ -16,6 +29,32 @@ const FormCreateSignal = () => {
       type: 'sos',
     },
   })
+
+  function geoFindMe() {
+    function success(position: {
+      coords: { latitude: number; longitude: number }
+    }) {
+      setGeoLocation({
+        status: 'located',
+        lat: position.coords.latitude,
+        long: position.coords.longitude,
+      })
+    }
+
+    function error() {
+      setGeoLocation({
+        status: 'Error',
+      })
+    }
+
+    if (!navigator.geolocation) {
+      setGeoLocation({
+        status: 'Geolocation is not supported by your browser',
+      })
+    } else {
+      navigator.geolocation.getCurrentPosition(success, error)
+    }
+  }
 
   const onSubmit: SubmitHandler<SignalFormInput> = async (data) => {
     // Add userId
@@ -34,9 +73,9 @@ const FormCreateSignal = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='w-full my-10 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4'
+      className='my-10 grid w-full grid-cols-1 gap-x-8 gap-y-4 text-xl md:grid-cols-2'
     >
-      <div>
+      <div className='border-b-2 pb-2 text-lg'>
         <p>Chose S.O.S if you need help</p>
         <p>
           Chose Shelter if you want to inform people that you are provide a help
@@ -61,31 +100,29 @@ const FormCreateSignal = () => {
               type='radio'
               {...register('type')}
               value='shelter'
-              className='m-4 appearance-none peer rounded-md checked:bg-blue-500'
+              className='peer m-4 appearance-none rounded-md checked:bg-blue-500'
             />
             Shelter
           </label>
         </div>
       </fieldset>
 
-      <div className=''>
-        <p>fill your name</p>
+      <div className='border-b-2 pb-2 text-lg'>
+        <p>Fill in a name that you are comfortable with for people to call</p>
       </div>
       <label className='block'>
-        <span className='block mb-2 text-sm font-medium text-slate-700'>
-          Name
-        </span>
+        <span className='mb-2 block text-slate-900'>Name</span>
         <input
           type='text'
           {...register('author')}
-          className='w-full peer rounded-md'
+          className='peer w-full rounded-md'
         />
-        <p className='mt-2 invisible peer-invalid:visible text-pink-600 text-sm'>
+        <p className='invisible mt-2 text-pink-600 peer-invalid:visible'>
           Please provide a name
         </p>
       </label>
 
-      <div>
+      <div className='border-b-2 pb-2 text-lg'>
         <p>tell your problem in the title</p>
         <p>example</p>
         <ol>
@@ -94,61 +131,103 @@ const FormCreateSignal = () => {
         </ol>
       </div>
       <label className='block'>
-        <span className='block mb-2 text-sm font-medium text-slate-700'>
-          Title
-        </span>
+        <span className='mb-2 block text-slate-900'>Title</span>
         <input
           type='text'
           {...register('title')}
-          className='w-full peer rounded-md'
+          className='peer w-full rounded-md'
         />
       </label>
 
-      <div>
-        <p>describe location where people need to gather or meet</p>
+      <div className='border-b-2 pb-2 text-lg'>
+        <p>Location where people need to gather or meet.</p>
+        <p>
+          Latidude, Longitude to generate Map. Latidude, Longitude is not
+          require but cant generate map without it
+        </p>
+        <p>
+          Use Show my location buttton to show ur current location or u cant
+          write manualy latitude, longitude
+        </p>
+        <p>
+          usefull link:{' '}
+          <a
+            href='https://www.latlong.net/countries.html'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='text-blue-400 hover:underline'
+          >
+            www.latlong.net
+          </a>
+        </p>
       </div>
       <label className='block'>
-        <span className='block mb-2 text-sm font-medium text-slate-700'>
-          Location
-        </span>
+        <span className='mb-2 block text-slate-900'>Location</span>
         <input
           type='text'
           {...register('location')}
-          className='w-full peer rounded-md'
+          className='peer mb-2 w-full rounded-md'
         />
+
+        <div className='flex justify-between gap-x-4'>
+          <span className='block text-slate-900'>
+            Latitude
+            <input
+              type='text'
+              {...register('lat')}
+              className='peer mt-2 w-full rounded-md'
+            />
+          </span>
+          <span className='block text-slate-900'>
+            Longitude
+            <input
+              type='text'
+              {...register('long')}
+              className='peer mt-2 w-full rounded-md'
+            />
+          </span>
+        </div>
+        <div className='flex justify-between'>
+          <button
+            onClick={() => geoFindMe()}
+            className='my-3  rounded bg-blue-600 px-4 py-2 font-bold text-blue-50'
+          >
+            Show my location
+          </button>
+          {geoLocation.status === 'located' && (
+            <p className='my-3 px-4 py-2'>
+              Latitude:{' '}
+              <span className='text-amber-600'>{geoLocation.lat},</span>{' '}
+              Longitude:{' '}
+              <span className='text-amber-600'>{geoLocation.long}</span>
+            </p>
+          )}
+        </div>
       </label>
 
-      <div>
-        <ul>
-          <li>
-            a. for type S.O.S describe what you need, example: we need water and
-            clothes
-          </li>
-          <li>
-            b. for type Shelter describe what you provide, example: we have
-            place for 8 people , food and water for a week
-          </li>
-        </ul>
+      <div className='border-b-2 pb-2 text-lg'>
+        <p>
+          What you provide or what you need, example: we have place for 8
+          people, food and water for a week. we need clothes and medical suply
+        </p>
       </div>
       <label className='block'>
-        <span className='block mb-2 text-sm font-medium text-slate-700'>
-          Necessity
-        </span>
+        <span className='mb-2 block text-slate-900'>Necessity</span>
         <input
           type='text'
           {...register('necessity')}
-          className='w-full peer rounded-md'
+          className='peer w-full rounded-md'
         />
       </label>
 
       {isSubmitting ? (
-        <button disabled className='px-8 py-4 bg-green-500'>
+        <button disabled className='bg-green-500 px-8 py-4'>
           <Loader /> Loading
         </button>
       ) : (
         <button
           type='submit'
-          className='grid-col-[3_/_4] px-8 py-4 bg-green-500'
+          className='grid-col-[3_/_4] bg-green-500 px-8 py-4'
         >
           Submit
         </button>
