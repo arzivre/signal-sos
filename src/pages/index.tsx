@@ -1,7 +1,147 @@
-import Layout from 'src/components/Layout'
-import SignalList from 'src/components/SignalList'
+import type { People, Signal } from '@prisma/client'
 import type { NextPage } from 'next'
+import { useSession } from 'next-auth/react'
+import dynamic from 'next/dynamic'
 import Head from 'next/head'
+import { Suspense, useState } from 'react'
+import FormPeopleJoinSignal from 'src/components/FormPeopleJoinSignal'
+import Layout from 'src/components/Layout'
+import Loader from 'src/components/Loader'
+import Pagination from 'src/components/Pagination'
+import fetcher from 'src/server/fetcher'
+import useSWR from 'swr'
+import { proxy, useSnapshot } from 'valtio'
+
+const LazyMap = dynamic(
+  () => {
+    return import('src/components/Map')
+  },
+  { ssr: false }
+)
+
+interface StateProps {
+  index: number
+  selectIndex: (id: number) => void
+}
+const state = proxy<StateProps>({
+  index: 0,
+  selectIndex: (id: number) => {
+    state.index = id
+  },
+})
+
+function useSelectSignal() {
+  return useSnapshot(state)
+}
+
+const SignalDetailCard: React.FC<Signal> = (props) => {
+  const { data: session } = useSession()
+
+  const { data: people = [], error } = useSWR<[People]>(
+    `/api/people/${props.id}`,
+    fetcher
+  )
+
+  const isJoined: People | undefined = people.find(
+    (data) => data.userId === session?.user?.id
+  )
+
+  if (!props.id) return <Loader />
+
+  if (error) return <div>failed to load</div>
+
+  return (
+    <div className='mx-auto w-full border-4 px-4'>
+      <Suspense fallback={<Loader />}>
+        {props.lat && props.long && (
+          <LazyMap position={[Number(props.lat), Number(props.long)]} />
+        )}
+        <h1 className='text-4xl'>{props.type}</h1>
+        <p>{props.title}</p>
+        <p>{props.author}</p>
+        <p>{props.necessity}</p>
+        <p>{props.location}</p>
+        <p>
+          Latidude: {props.lat}, Longitude:{props.long}
+        </p>
+        <p>People Joined</p>
+        <ul className='grid grid-cols-[auto_auto_auto_auto]'>
+          {people?.map(({ id, name }) => (
+            <li key={id} title={name} className='rounded-sm px-4'>
+              <p>{name}</p>
+            </li>
+          ))}
+        </ul>
+        <p>Items Donated</p>
+        <ul className='grid grid-cols-[auto_auto_auto_auto]'>
+          {people?.map(({ id, items }) => (
+            <li key={id} title={items} className='rounded-sm px-4'>
+              <p>{items}</p>
+            </li>
+          ))}
+        </ul>
+        <FormPeopleJoinSignal
+          id={props.id}
+          type={props.type}
+          isJoined={isJoined}
+        />
+      </Suspense>
+    </div>
+  )
+}
+
+const SignalCard: React.FC<Signal> = (props) => {
+  return (
+    <li>
+      <p>{props.id}</p>
+      <p>{props.type}</p>
+      <p>{props.title}</p>
+      <p>{props.author}</p>
+      <p>{props.necessity}</p>
+      <p>{props.location}</p>
+    </li>
+  )
+}
+
+const SignalList = () => {
+  const { index, selectIndex } = useSelectSignal() //* Valtio Global State
+  const [paginationIndex, setPaginationIndex] = useState(0)
+
+  const { data = [], error } = useSWR<[Signal]>(
+    `/api/signal/${paginationIndex}`,
+    fetcher,
+    { refreshInterval: 2000, dedupingInterval: 2000 }
+  )
+
+  if (error) return <div>failed to load</div>
+
+  return (
+    <>
+      <section className='mx-4'>
+        <Suspense fallback={<Loader />}>
+          {data.map((signal, index) => (
+            <ul
+              key={signal.id}
+              onClick={() => selectIndex(index)}
+              className='mx-auto w-full border-4 px-4 hover:border-green-400'
+            >
+              <SignalCard {...signal} />
+            </ul>
+          ))}
+          <Pagination
+            state={paginationIndex}
+            setState={setPaginationIndex}
+            dataLength={data.length}
+          />
+        </Suspense>
+      </section>
+
+      <Suspense fallback={<Loader />}>
+        <SignalDetailCard {...data[index]!} />
+      </Suspense>
+    </>
+  )
+}
 
 const Home: NextPage = () => {
   return (
