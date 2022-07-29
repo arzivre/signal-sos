@@ -8,24 +8,18 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log(req.headers['token'])
-
   try {
-    //joined?&id=12
-    //
-    // }
-    //   "query": {
-    //   "id": "12",
-    //   "user": [
-    //     "joined"
-    //   ]
-    // }
     const userQuery = req.query.user?.toString()
     const idQuery = req.query.id?.toString()
 
     if (req.method === 'POST') {
       await createSignal(req, res)
     }
+
+    if (req.method === 'DELETE') {
+      await deleteSignal(req, res)
+    }
+
     if (req.method === 'GET') {
       if (userQuery === 'joined' && idQuery) {
         await getAllUserJoinedSignal(req, res)
@@ -33,9 +27,9 @@ export default async function handler(
 
       await getAllUserSignal(req, res)
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error(`Request error: [${error}]`)
-    res.status(500).json({ message: error.message })
+    res.status(500).json({ error: error })
   }
 }
 
@@ -47,6 +41,13 @@ const createSignal = async (req: NextApiRequest, res: NextApiResponse) => {
     },
   })
   res.status(200).json(user)
+}
+
+const deleteSignal = async (req: NextApiRequest, res: NextApiResponse) => {
+  const user = await prisma.signal.delete({
+    where: { id: req.query.user?.toString() },
+  })
+  res.status(202).json(user)
 }
 
 const getAllUserSignal = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -95,3 +96,13 @@ const getAllUserJoinedSignal = async (
 
   res.status(200).json(joinedSignal)
 }
+
+//joined?&id=12
+//
+// }
+//   "query": {
+//   "id": "12",
+//   "user": [
+//     "joined"
+//   ]
+// }

@@ -7,6 +7,7 @@ import Loader from './Loader'
 import type { People, Signal } from '@prisma/client'
 import dynamic from 'next/dynamic'
 import Pagination from './Pagination'
+import fetcher from 'src/server/fetcher'
 
 const LazyMap = dynamic(
   () => {
@@ -28,14 +29,6 @@ const state = proxy<StateProps>({
 
 function useSelectSignal() {
   return useSnapshot(state)
-}
-
-async function fetcher<JSON = any>(
-  input: RequestInfo,
-  init?: RequestInit
-): Promise<JSON> {
-  const res = await fetch(input, init)
-  return res.json()
 }
 
 const SignalDetailCard: React.FC<Signal> = ({

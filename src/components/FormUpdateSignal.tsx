@@ -27,7 +27,6 @@ const FormUpdateSignal: React.FC<FormUpdateSignalProps> = ({
   })
 
   const {
-    reset,
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -92,7 +91,7 @@ const FormUpdateSignal: React.FC<FormUpdateSignalProps> = ({
       className='my-10 grid w-full grid-cols-1 gap-x-8 gap-y-4 text-xl md:grid-cols-2'
     >
       <p>{data?.id}</p>
-      <button onClick={() => setUpdate(false)}>go bacck</button>
+      <button onClick={() => setUpdate(false)}>Cancel Update</button>
       <div className='border-b-2 pb-2 text-lg'>
         <p>Chose S.O.S if you need help</p>
         <p>
