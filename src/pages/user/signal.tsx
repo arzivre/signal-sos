@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { Suspense, useState } from 'react'
 import useSWR from 'swr'
+import Pagination from 'src/components/Pagination'
 
 async function fetcher<JSON = any>(
   input: RequestInfo,
@@ -48,30 +49,11 @@ const UserJoinedSignal = () => {
               <SignalCard key={signal.id} {...signal} />
             ))}
           </section>
-          <div className='mx-4  grid grid-cols-[1fr_auto_1fr] text-center'>
-            {indexJoinedSignal > 0 ? (
-              <button
-                onClick={() => setIndexJoinedSignal(indexJoinedSignal - 1)}
-              >
-                Previous
-              </button>
-            ) : (
-              <div />
-            )}
-            {indexJoinedSignal > 0 ? (
-              <p> {indexJoinedSignal + 1} </p>
-            ) : (
-              <p>1</p>
-            )}
-            {data.length > 0 && (
-              <button
-                disabled={data.length === 0}
-                onClick={() => setIndexJoinedSignal(indexJoinedSignal + 1)}
-              >
-                Next
-              </button>
-            )}
-          </div>
+          <Pagination
+            state={indexJoinedSignal}
+            setState={setIndexJoinedSignal}
+            dataLength={data.length}
+          />
         </>
       ) : (
         <div>
@@ -103,31 +85,18 @@ const UserCreatedSignal = () => {
 
   return (
     <>
-      <h2 className='mb-8 font-serif text-[calc(1em+2vw)]'>Yuor Signal</h2>
+      <h2 className='mb-8 font-serif text-[calc(1em+2vw)]'>Your Signal</h2>
 
       <section className='grid grid-cols-2 md:gap-x-8'>
         {data.map((signal) => (
           <SignalCard key={signal.id} {...signal} />
         ))}
       </section>
-      <div className='mx-4  grid grid-cols-[1fr_auto_1fr] text-center'>
-        {paginationIndex > 0 ? (
-          <button onClick={() => setPaginationIndex(paginationIndex - 1)}>
-            Previous
-          </button>
-        ) : (
-          <div />
-        )}
-        {paginationIndex > 0 ? <p> {paginationIndex + 1} </p> : <p>1</p>}
-        {data.length > 0 && (
-          <button
-            disabled={data.length === 0}
-            onClick={() => setPaginationIndex(paginationIndex + 1)}
-          >
-            Next
-          </button>
-        )}
-      </div>
+      <Pagination
+        state={paginationIndex}
+        setState={setPaginationIndex}
+        dataLength={data.length}
+      />
     </>
   )
 }

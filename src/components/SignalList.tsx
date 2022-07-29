@@ -6,6 +6,7 @@ import FormPeopleJoinSignal from './FormPeopleJoinSignal'
 import Loader from './Loader'
 import type { People, Signal } from '@prisma/client'
 import dynamic from 'next/dynamic'
+import Pagination from './Pagination'
 
 const LazyMap = dynamic(
   () => {
@@ -141,22 +142,11 @@ const SignalList = () => {
             </ul>
           ))}
         </Suspense>
-        <div className='mx-4  grid grid-cols-[1fr_auto_1fr] text-center'>
-          {paginationIndex > 0 ? (
-            <button onClick={() => setPaginationIndex(paginationIndex - 1)}>
-              Previous
-            </button>
-          ) : (
-            <div />
-          )}
-          {paginationIndex > 0 ? <p> {paginationIndex + 1} </p> : <p>1</p>}
-          <button
-            disabled={data.length === 0}
-            onClick={() => setPaginationIndex(paginationIndex + 1)}
-          >
-            Next
-          </button>
-        </div>
+        <Pagination
+          state={paginationIndex}
+          setState={setPaginationIndex}
+          dataLength={data.length}
+        />
       </section>
 
       <Suspense fallback={<Loader />}>
