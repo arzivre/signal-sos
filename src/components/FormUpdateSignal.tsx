@@ -1,17 +1,24 @@
-import { Signal as SignalFormInput } from '@prisma/client'
-import { useForm, SubmitHandler } from 'react-hook-form'
-import Loader from 'src/components/Loader'
+import { Signal, Signal as SignalFormInput } from '@prisma/client'
 import { useSession } from 'next-auth/react'
-import { useState } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import Loader from 'src/components/Loader'
 
+interface FormUpdateSignalProps {
+  data?: Signal
+  setUpdate: Dispatch<SetStateAction<boolean>>
+}
 interface GeoLocation {
   status: string
   lat?: number
   long?: number
 }
 
-const FormUpdateSignal = () => {
-  const { data: session, status } = useSession()
+const FormUpdateSignal: React.FC<FormUpdateSignalProps> = ({
+  data,
+  setUpdate,
+}) => {
+  const { data: session } = useSession()
 
   const [geoLocation, setGeoLocation] = useState<GeoLocation>({
     status: 'loading',
@@ -27,7 +34,14 @@ const FormUpdateSignal = () => {
   } = useForm<SignalFormInput>({
     defaultValues: {
       status: true,
-      type: 'sos',
+      id: data?.id,
+      type: data?.type,
+      author: data?.author,
+      title: data?.title,
+      location: data?.location,
+      lat: data?.lat,
+      long: data?.long,
+      necessity: data?.necessity,
     },
   })
 
@@ -57,18 +71,19 @@ const FormUpdateSignal = () => {
     }
   }
 
-  const onSubmit: SubmitHandler<SignalFormInput> = async (data) => {
+  const onSubmit: SubmitHandler<SignalFormInput> = async (formData) => {
     // Add userId
-    data.userId = session?.user?.id!
-    // Post
-    const response = await fetch(`/api/user/${session?.user?.id}`, {
+    formData.userId = session?.user?.id!
+    // PUT
+    await fetch(`/api/user/${data?.id}`, {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      method: 'POST',
-      body: JSON.stringify(data),
+      method: 'PUT',
+      body: JSON.stringify(formData),
     })
+    setUpdate(false)
   }
 
   return (
@@ -76,6 +91,8 @@ const FormUpdateSignal = () => {
       onSubmit={handleSubmit(onSubmit)}
       className='my-10 grid w-full grid-cols-1 gap-x-8 gap-y-4 text-xl md:grid-cols-2'
     >
+      <p>{data?.id}</p>
+      <button onClick={() => setUpdate(false)}>go bacck</button>
       <div className='border-b-2 pb-2 text-lg'>
         <p>Chose S.O.S if you need help</p>
         <p>
@@ -230,7 +247,7 @@ const FormUpdateSignal = () => {
           type='submit'
           className='grid-col-[3_/_4] bg-green-500 px-8 py-4'
         >
-          Submit
+          Update
         </button>
       )}
     </form>
