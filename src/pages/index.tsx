@@ -12,12 +12,7 @@ import fetcher from 'src/server/fetcher'
 import useSWR from 'swr'
 import { proxy, useSnapshot } from 'valtio'
 
-const LazyMap = dynamic(
-  () => {
-    return import('src/components/Map')
-  },
-  { ssr: false }
-)
+const LazyMap = dynamic(() => import('src/components/Map'), { ssr: false })
 
 interface StateProps {
   index: number
