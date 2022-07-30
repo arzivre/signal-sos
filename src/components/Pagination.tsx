@@ -12,7 +12,10 @@ const Pagination: React.FC<PaginationProps> = ({
   dataLength,
 }) => {
   return (
-    <div className='mx-4  grid grid-cols-[1fr_auto_1fr] text-center'>
+    <div
+      className='grid grid-cols-[1fr_auto_1fr] 
+      rounded border-4 border-black p-4 text-center text-xl text-gray-50'
+    >
       {state > 0 ? (
         <button onClick={() => setState(state - 1)}>Previous Page</button>
       ) : (

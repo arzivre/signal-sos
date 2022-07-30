@@ -46,19 +46,21 @@ const SignalDetailCard: React.FC<Signal> = (props) => {
   if (error) return <div>failed to load</div>
 
   return (
-    <div className='mx-auto w-full border-4 px-4'>
+    <div className='mx-auto w-full rounded border-4 border-black bg-[#16161a] px-8 text-xl text-gray-500'>
       <Suspense fallback={<Loader />}>
+        <h1
+          className={`py-6 text-center text-5xl 
+        ${props.type === 'sos' ? 'text-orange-500' : 'text-green-500'}`}
+        >
+          {props.type.toUpperCase()}
+        </h1>
         {props.lat && props.long && (
           <LazyMap position={[Number(props.lat), Number(props.long)]} />
         )}
-        <h1 className='text-4xl'>{props.type}</h1>
-        <p>{props.title}</p>
-        <p>{props.author}</p>
-        <p>{props.necessity}</p>
-        <p>{props.location}</p>
-        <p>
-          Latidude: {props.lat}, Longitude:{props.long}
-        </p>
+        <h2 className='my-2 text-4xl text-white'>{props.title}</h2>
+        <p>Author: {props.author}</p>
+        <p>Necessity: {props.necessity}</p>
+        <p>Location: {props.location}</p>
         <p>People Joined</p>
         <ul className='grid grid-cols-[auto_auto_auto_auto]'>
           {people?.map(({ id, name }) => (
@@ -87,14 +89,30 @@ const SignalDetailCard: React.FC<Signal> = (props) => {
 
 const SignalCard: React.FC<Signal> = (props) => {
   return (
-    <li>
-      <p>{props.id}</p>
-      <p>{props.type}</p>
-      <p>{props.title}</p>
-      <p>{props.author}</p>
-      <p>{props.necessity}</p>
-      <p>{props.location}</p>
-    </li>
+    <div className='grid grid-cols-[1fr_auto]'>
+      <div className='text-lg text-gray-800'>
+        <p
+          className={`mb-1 text-2xl text-gray-50
+        ${props.type === 'sos' ? null : 'text-gray-900'}`}
+        >
+          {props.title}
+        </p>
+        <p>Author: {props.author}</p>
+        <p>Location: {props.location}</p>
+        <p>Necessity: {props.necessity}</p>
+      </div>
+      <div className='grid grid-rows-[1fr_auto_1fr]'>
+        <div />
+        <p
+          className={`mr-4 p-2 text-right text-3xl font-bold text-slate-900 
+          ${props.type === 'sos' ? null : 'text-green-500'}
+          `}
+        >
+          {props.type.toUpperCase()}
+        </p>
+        <div />
+      </div>
+    </div>
   )
 }
 
@@ -112,17 +130,23 @@ const SignalList = () => {
 
   return (
     <>
-      <section className='mx-4'>
+      <section className='mx-4 '>
         <Suspense fallback={<Loader />}>
-          {data.map((signal, index) => (
-            <ul
-              key={signal.id}
-              onClick={() => selectIndex(index)}
-              className='mx-auto w-full border-4 px-4 hover:border-green-400'
-            >
-              <SignalCard {...signal} />
-            </ul>
-          ))}
+          <ul>
+            {data.map((signal, index) => (
+              <li
+                key={signal.id}
+                onClick={() => selectIndex(index)}
+                className={`mx-auto mb-4 w-full rounded p-4 hover:border-green-400 ${
+                  signal.type === 'sos'
+                    ? 'bg-[#7f5af0] text-gray-50'
+                    : 'bg-green-200 text-gray-900'
+                }`}
+              >
+                <SignalCard {...signal} />
+              </li>
+            ))}
+          </ul>
           <Pagination
             state={paginationIndex}
             setState={setPaginationIndex}
@@ -148,12 +172,12 @@ const Home: NextPage = () => {
       </Head>
 
       <Layout>
-        <h1 className='mx-auto mb-8 max-w-7xl px-4 font-serif text-[calc(1em+8vh)]'>
-          Signal
-        </h1>
-        <div className='container my-10 mx-auto grid grid-cols-1 md:grid-cols-2 md:gap-8'>
+        <main
+          role='main'
+          className='container my-10 mx-auto grid grid-cols-1 p-4 md:grid-cols-2 md:gap-8'
+        >
           <SignalList />
-        </div>
+        </main>
       </Layout>
     </>
   )

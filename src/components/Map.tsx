@@ -29,7 +29,11 @@ const Map = ({ position = DEFAULT }: { position?: LatLngExpression }) => {
 
   return (
     <>
-      <MapContainer center={position} zoom={12} style={{ height: '50vh' }}>
+      <MapContainer
+        center={position}
+        zoom={12}
+        style={{ height: '50vh' }}
+      >
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
