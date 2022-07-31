@@ -69,7 +69,7 @@ const FormPeopleJoinSignal: React.FC<{
         <input
           type='text'
           {...register('name', { required: true })}
-          className='peer w-full rounded-md'
+          className='peer text-hitam w-full rounded-md'
         />
       </label>
       <label className='block'>
@@ -79,7 +79,7 @@ const FormPeopleJoinSignal: React.FC<{
         <input
           type='text'
           {...register('items')}
-          className='peer w-full rounded-md'
+          className='peer text-hitam w-full rounded-md'
         />
       </label>
       <div className='flex justify-between'>
