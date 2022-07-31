@@ -6,6 +6,10 @@ generator client {
     previewFeatures = ["referentialIntegrity"]
 }
 
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
 datasource db {
     provider             = "mysql"
     referentialIntegrity = "prisma"

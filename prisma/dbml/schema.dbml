@@ -1,0 +1,93 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table People {
+  id String [pk]
+  signalId String [not null]
+  userId String [not null]
+  type TypeSignal [not null, default: 'sos']
+  name String [not null]
+  items String
+  Signal Signal
+}
+
+Table Signal {
+  id String [pk]
+  userId String [not null]
+  status Boolean [not null]
+  type TypeSignal [not null, default: 'sos']
+  author String [not null]
+  title String [not null]
+  location String
+  lat String
+  long String
+  necessity String [not null]
+  description String
+  created_at DateTime [default: `now()`]
+  updated_at DateTime
+  people People [not null]
+  user User [not null]
+}
+
+Table Account {
+  id String [pk]
+  userId String [not null]
+  type String [not null]
+  provider String [not null]
+  providerAccountId String [not null]
+  refresh_token String
+  access_token String
+  expires_at Int
+  token_type String
+  scope String
+  id_token String
+  session_state String
+  user User [not null]
+
+  indexes {
+    (provider, providerAccountId) [unique]
+  }
+}
+
+Table Session {
+  id String [pk]
+  sessionToken String [unique, not null]
+  userId String [not null]
+  expires DateTime [not null]
+  user User [not null]
+}
+
+Table User {
+  id String [pk]
+  name String
+  email String [unique]
+  emailVerified DateTime
+  image String
+  accounts Account [not null]
+  sessions Session [not null]
+  signal Signal [not null]
+}
+
+Table VerificationToken {
+  identifier String [not null]
+  token String [unique, not null]
+  expires DateTime [not null]
+
+  indexes {
+    (identifier, token) [unique]
+  }
+}
+
+Enum TypeSignal {
+  sos
+  shelter
+}
+
+Ref: People.signalId > Signal.id
+
+Ref: Signal.userId > User.id [delete: Cascade]
+
+Ref: Account.userId > User.id [delete: Cascade]
+
+Ref: Session.userId > User.id [delete: Cascade]

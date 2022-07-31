@@ -1,7 +1,7 @@
 # [Signal SOS](https://signal-sos.vercel.app/)
 - Signal SOS is initially made for the [hashnode x PlanetScale hackathon](https://townhall.hashnode.com/planetscale-hackathon?source=hashnode_countdown)
 - What is this repo or project?
-    This app is made to connect community when something like natural  disaster happen, people who need help can create signal SOS, and people who provide help can create signal SHELTER so peoplea know where to get help and other nesecesity
+    This app is made to connect community when something like natural  disaster happen, people who need help can create signal SOS, and people who provide help can create signal SHELTER so people know where to get help and other necessity
 - How does it work?
     create signal sos or shellter, team rescue will go to signal sos and survivo will gather to shellter
 - Who will use this repo or project?
@@ -17,6 +17,8 @@
 - **Authentication**: [NextAuth.js](https://next-auth.js.org/)
 - **Map**: [Leaflet](https://leafletjs.com/), [react-leaflet](https://react-leaflet.js.org/)
 - **Deployment**: [Vercel](https://vercel.com)
+
+![DB Diagram](https://raw.githubusercontent.com/arzivre/signal-sos/main/dbdiagram.png)
 
 ## Running Locally
 ```

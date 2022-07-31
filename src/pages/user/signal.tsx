@@ -2,6 +2,7 @@ import autoAnimate from '@formkit/auto-animate'
 import type { Signal } from '@prisma/client'
 import type { NextPage } from 'next'
 import { useSession, signIn } from 'next-auth/react'
+import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Link from 'next/link'
 import { Suspense, useEffect, useRef, useState } from 'react'
@@ -12,6 +13,8 @@ import Pagination from 'src/components/Pagination'
 import fetcher from 'src/server/fetcher'
 import useSWR, { mutate } from 'swr'
 import { SignalCard } from '..'
+
+const LazyMap = dynamic(() => import('src/components/Map'), { ssr: false })
 
 const UserCreatedSignal = () => {
   const { status } = useSession()
@@ -67,6 +70,11 @@ const UserCreatedSignal = () => {
                       : 'bg-green-200 text-gray-900'
                   }`}
                 >
+                  {signal.lat && signal.long && (
+                    <LazyMap
+                      position={[Number(signal.lat), Number(signal.long)]}
+                    />
+                  )}
                   <SignalCard {...signal} />
                   {update && index === dataIndex && (
                     <FormUpdateSignal data={signal} setUpdate={setUpdate} />
