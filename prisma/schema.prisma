@@ -18,7 +18,7 @@ model People {
     userId   String
     type     TypeSignal @default(sos)
     name     String
-    items    String
+    items    String?
     Signal   Signal?    @relation(fields: [signalId], references: [id])
 }
 

@@ -11,7 +11,7 @@ const AboutPage = () => {
       </Head>
 
       <Layout>
-        <main className='container mx-auto max-w-7xl px-4 text-2xl my-10'>
+        <main className='container mx-auto my-20 max-w-7xl px-4 text-2xl text-gray-50'>
           <h1 className='mb-8 font-serif text-[calc(1em+8vh)]'>About</h1>
           <p>
             this web app is made to connect comunity when somtehing like natural

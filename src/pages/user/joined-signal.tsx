@@ -1,26 +1,19 @@
-import type { Signal } from '@prisma/client'
+import type { People, Signal } from '@prisma/client'
 import Link from 'next/link'
 import { useState } from 'react'
 import Layout from 'src/components/Layout'
 import Pagination from 'src/components/Pagination'
 import fetcher from 'src/server/fetcher'
 import useSWR from 'swr'
+import { SignalCard } from '..'
 
-const SignalCard = ({ title, author, necessity, location }: Signal) => {
-  return (
-    <div className='m-4 border-4'>
-      <p>{title}</p>
-      <p>{author}</p>
-      <p>{necessity}</p>
-      <p>{location}</p>
-    </div>
-  )
+type SignalAndPeople = Signal & {
+  people: [People]
 }
-
 const JoinedSignalPage = () => {
   const [indexJoinedSignal, setIndexJoinedSignal] = useState(0)
 
-  const { data = [], error } = useSWR<[Signal]>(
+  const { data = [], error } = useSWR<[SignalAndPeople]>(
     `/api/joined/get?&id=${indexJoinedSignal}`,
     fetcher
   )
@@ -31,22 +24,55 @@ const JoinedSignalPage = () => {
 
   return (
     <Layout>
-      <main className='container mx-auto my-10 min-h-full'>
-        <h1 className='mb-8 font-serif text-[calc(1em+3vw)]'>Joined Signal</h1>
-        <div className='flex justify-evenly'>
+      <main className='container mx-auto my-10 min-h-full rounded bg-hitam p-4 md:p-8'>
+        <h1 className='mb-8 font-serif text-[calc(1em+3vw)] text-white'>
+          Joined Signal
+        </h1>
+        <div className='flex justify-evenly rounded text-lg font-semibold'>
           <Link href={'/user/signal'}>
-            <button>Your Signal</button>
+            <button className='my-4 w-full rounded-l bg-green-900 p-4 hover:underline'>
+              Your Signal
+            </button>
           </Link>
           <Link href={'/user/joined-signal'}>
-            <button>Joined Signal</button>
+            <button className='my-4 w-full rounded-r bg-purple-900 p-4 hover:underline'>
+              Joined Signal
+            </button>
           </Link>
         </div>
         {data.length > 0 ? (
           <>
-            <section className='grid grid-cols-2 md:gap-x-8'>
-              {data.map((signal) => (
-                <SignalCard key={signal.id} {...signal} />
-              ))}
+            <section className='grid grid-cols-1 md:gap-x-8 text-xl font-semibold'>
+              <ul>
+                {data.map((signal) => (
+                  <li
+                    key={signal.id}
+                    className={`mx-auto mb-4 w-full rounded p-4 hover:border-green-400 ${
+                      signal.type === 'sos'
+                        ? 'bg-[#7f5af0] text-gray-50'
+                        : 'bg-green-200 text-gray-900'
+                    }`}
+                  >
+                    <SignalCard {...signal} />
+                    <p>People joined</p>
+                    <ul className='grid grid-cols-[auto_auto_auto_auto]'>
+                      {signal.people?.map(({ id, name }) => (
+                        <li key={id} title={name} className='rounded-sm px-4'>
+                          <p>{name}</p>
+                        </li>
+                      ))}
+                    </ul>
+                    <p>Items Donated</p>
+                    <ul className='grid grid-cols-[auto_auto_auto_auto]'>
+                      {signal.people?.map(({ id, items }) => (
+                        <li key={id} title={items} className='rounded-sm px-4'>
+                          <p>{items}</p>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+              </ul>
             </section>
             <Pagination
               state={indexJoinedSignal}

@@ -46,7 +46,10 @@ const SignalDetailCard: React.FC<Signal> = (props) => {
   if (error) return <div>failed to load</div>
 
   return (
-    <div className='mx-auto w-full rounded border-4 border-black bg-[#16161a] px-8 text-xl text-gray-500'>
+    <div
+      className='mx-auto w-full rounded border-4 border-black bg-[#16161a] px-8 
+      text-xl font-semibold text-gray-500'
+    >
       <Suspense fallback={<Loader />}>
         <h1
           className={`py-6 text-center text-5xl 
@@ -61,7 +64,7 @@ const SignalDetailCard: React.FC<Signal> = (props) => {
         <p>Author: {props.author}</p>
         <p>Necessity: {props.necessity}</p>
         <p>Location: {props.location}</p>
-        <p>People Joined</p>
+        <p className='mt-2 text-gray-200'>People Joined</p>
         <ul className='grid grid-cols-[auto_auto_auto_auto]'>
           {people?.map(({ id, name }) => (
             <li key={id} title={name} className='rounded-sm px-4'>
@@ -69,7 +72,7 @@ const SignalDetailCard: React.FC<Signal> = (props) => {
             </li>
           ))}
         </ul>
-        <p>Items Donated</p>
+        <p className='mt-2 text-gray-200'>Items Donated</p>
         <ul className='grid grid-cols-[auto_auto_auto_auto]'>
           {people?.map(({ id, items }) => (
             <li key={id} title={items} className='rounded-sm px-4'>
@@ -87,10 +90,14 @@ const SignalDetailCard: React.FC<Signal> = (props) => {
   )
 }
 
-const SignalCard: React.FC<Signal> = (props) => {
+export const SignalCard: React.FC<Signal> = (props) => {
   return (
     <div className='grid grid-cols-[1fr_auto]'>
-      <div className='text-lg text-gray-800'>
+      <div
+        className={`text-lg font-semibold ${
+          props.type === 'sos' ? 'text-gray-100' : 'text-gray-900'
+        }`}
+      >
         <p
           className={`mb-1 text-2xl text-gray-50
         ${props.type === 'sos' ? null : 'text-gray-900'}`}
@@ -104,7 +111,7 @@ const SignalCard: React.FC<Signal> = (props) => {
       <div className='grid grid-rows-[1fr_auto_1fr]'>
         <div />
         <p
-          className={`mr-4 p-2 text-right text-3xl font-bold text-slate-900 
+          className={`mr-4 p-2 text-right text-[calc(1em+1vw)] font-bold text-slate-900 
           ${props.type === 'sos' ? null : 'text-green-500'}
           `}
         >
@@ -137,7 +144,9 @@ const SignalList = () => {
               <li
                 key={signal.id}
                 onClick={() => selectIndex(index)}
-                className={`mx-auto mb-4 w-full rounded p-4 hover:border-green-400 ${
+                className={`mx-auto mb-4 w-full rounded border-4 border-black p-4 
+                hover:border-green-400 
+                ${
                   signal.type === 'sos'
                     ? 'bg-[#7f5af0] text-gray-50'
                     : 'bg-green-200 text-gray-900'

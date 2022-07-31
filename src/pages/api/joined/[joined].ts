@@ -42,6 +42,9 @@ const getAllUserJoinedSignal = async (
         },
       },
     },
+    include: {
+      people: true,
+    },
   })
 
   res.status(200).json(joinedSignal)

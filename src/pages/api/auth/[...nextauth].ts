@@ -7,6 +7,7 @@ import GoogleProvider from 'next-auth/providers/google'
 import nodemailer from 'nodemailer'
 import path from 'path'
 import { prisma } from 'src/server/prisma'
+import GithubProvider from 'next-auth/providers/github'
 
 const TRANSPORTER = nodemailer.createTransport(process.env.EMAIL_SERVER)
 const EMAIL_DIR = path.resolve(process.cwd(), 'src/emails')
@@ -57,6 +58,10 @@ const sendWelcomeEmail = async ({ user }: { user: User }) => {
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
+    GithubProvider({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
+    }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,

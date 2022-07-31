@@ -90,8 +90,14 @@ const FormUpdateSignal: React.FC<FormUpdateSignalProps> = ({
       onSubmit={handleSubmit(onSubmit)}
       className='my-10 grid w-full grid-cols-1 gap-x-8 gap-y-4 text-xl md:grid-cols-2'
     >
-      <p>{data?.id}</p>
-      <button onClick={() => setUpdate(false)}>Cancel Update</button>
+      <p>Id: {data?.id}</p>
+      <button
+        onClick={() => setUpdate(false)}
+        className='rounded border-2 border-black bg-red-50 px-4 py-2
+        text-2xl font-semibold text-red-500 hover:bg-red-600 hover:text-red-50'
+      >
+        Cancel Update
+      </button>
       <div className='border-b-2 pb-2 text-lg'>
         <p>Chose S.O.S if you need help</p>
         <p>
@@ -236,7 +242,8 @@ const FormUpdateSignal: React.FC<FormUpdateSignalProps> = ({
           className='peer w-full rounded-md'
         />
       </label>
-
+      
+      <div />
       {isSubmitting ? (
         <button disabled className='bg-green-500 px-8 py-4'>
           <Loader /> Loading

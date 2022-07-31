@@ -1,6 +1,7 @@
 import type { People, TypeSignal } from '@prisma/client'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { mutate } from 'swr'
 
 type PeopleForm = People
 
@@ -17,7 +18,6 @@ const FormPeopleJoinSignal: React.FC<{
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<PeopleForm>()
-  //? how useForm initialize dynamic data?
 
   const onSubmit: SubmitHandler<PeopleForm> = async (data) => {
     data.signalId = id
@@ -31,6 +31,7 @@ const FormPeopleJoinSignal: React.FC<{
       body: JSON.stringify(data),
     })
     reset()
+    mutate(`/api/people/${id}`)
     setShowForm(!showForm)
   }
 
@@ -40,42 +41,41 @@ const FormPeopleJoinSignal: React.FC<{
     return (
       <button
         onClick={() => setShowForm(!showForm)}
-        className='my-2 px-4 py-2 bg-green-400 rounded-sm'
+        className='my-4 rounded-sm bg-green-900 px-4 py-2 text-gray-50'
       >
-        {type === 'sos' ? 'send help' : 'join shelter'}
+        {type === 'sos' ? 'Send help' : 'Join shelter'}
       </button>
     )
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label className='block'>
-        <span className='block mb-2 text-sm font-medium text-slate-700'>
-          Name
-        </span>
+    <form onSubmit={handleSubmit(onSubmit)} className='text-xl text-white'>
+      <h3 className='text-center text-2xl'>Form Join Signal</h3>
+      <label className='block text-xl'>
+        <span className='mb-2 block font-medium '>Name</span>
         <input
           type='text'
           {...register('name')}
-          className='w-full peer rounded-md'
+          className='peer w-full rounded-md'
         />
       </label>
       <label className='block'>
-        <span className='block mb-2 text-sm font-medium text-slate-700'>
-          What help you provide
+        <span className='mb-2 block font-medium '>
+          What help you provide? (optional)
         </span>
         <input
           type='text'
           {...register('items')}
-          className='w-full peer rounded-md'
+          className='peer w-full rounded-md'
         />
       </label>
       <div className='flex justify-between'>
         <button
           onClick={() => setShowForm(!showForm)}
-          className='my-2 px-4 py-2 bg-green-400'
+          className='my-2 bg-green-900 px-4 py-2'
         >
           Back
         </button>
-        <button type='submit' className='my-2 px-4 py-2 bg-blue-400'>
+        <button type='submit' className='my-2 bg-blue-900 px-4 py-2'>
           Submit
         </button>
       </div>

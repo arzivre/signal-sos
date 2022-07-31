@@ -10,6 +10,7 @@ import Loader from 'src/components/Loader'
 import Pagination from 'src/components/Pagination'
 import fetcher from 'src/server/fetcher'
 import useSWR, { mutate } from 'swr'
+import { SignalCard } from '..'
 
 const UserCreatedSignal = () => {
   const [paginationIndex, setPaginationIndex] = useState(0)
@@ -38,28 +39,44 @@ const UserCreatedSignal = () => {
 
   return (
     <>
-      <section className='grid grid-cols-1'>
-        {data.map((signal, index) => (
-          <>
-            <div ref={parent} key={signal.id} className='m-4 border-4'>
-              <p>{signal.title}</p>
-              <p>{signal.author}</p>
-              <p>{signal.necessity}</p>
-              <p>{signal.location}</p>
-              <button
-                onClick={() => {
-                  setDataIndex(index), setUpdate(true)
-                }}
-              >
-                update
-              </button>
-              <button onClick={() => deleteSignal(signal.id)}>delete</button>
-              {update && index === dataIndex && (
-                <FormUpdateSignal data={signal} setUpdate={setUpdate} />
-              )}
-            </div>
-          </>
-        ))}
+      <section className='my-4 grid grid-cols-1'>
+        <ul>
+          {data.map((signal, index) => (
+            <>
+              <div className='grid grid-cols-[1fr_auto]'>
+                <li
+                  key={signal.id}
+                  className={`mx-auto mb-4 w-full rounded p-4 hover:border-green-400 ${
+                    signal.type === 'sos'
+                      ? 'bg-[#7f5af0] text-gray-50'
+                      : 'bg-green-200 text-gray-900'
+                  }`}
+                >
+                  <SignalCard {...signal} />
+                  {update && index === dataIndex && (
+                    <FormUpdateSignal data={signal} setUpdate={setUpdate} />
+                  )}
+                </li>
+                <div className='mb-4 ml-4 grid grid-cols-1 font-semibold '>
+                  <button
+                    onClick={() => {
+                      setDataIndex(index), setUpdate(true)
+                    }}
+                    className='rounded-t bg-blue-600 px-4 py-2 text-white hover:bg-blue-900'
+                  >
+                    update
+                  </button>
+                  <button
+                    onClick={() => deleteSignal(signal.id)}
+                    className='rounded-b bg-rose-100/10 px-4 py-2 text-rose-600 hover:bg-rose-900 hover:text-rose-50'
+                  >
+                    delete
+                  </button>
+                </div>
+              </div>
+            </>
+          ))}
+        </ul>
       </section>
       <Pagination
         state={paginationIndex}
@@ -78,15 +95,24 @@ const UserSignalPage: NextPage = () => {
       </Head>
 
       <Layout>
-        <main role='main' className='container mx-auto my-10'>
-          <h1 className='mb-8 font-serif text-[calc(1em+3vw)]'>Your Signal</h1>
+        <main
+          role='main'
+          className='container mx-auto my-10 rounded bg-hitam p-4 text-gray-50 md:p-8'
+        >
+          <h1 className='mb-8 font-serif text-[calc(1em+3vw)] text-white'>
+            Your Signal
+          </h1>
 
-          <div className='flex justify-evenly'>
+          <div className='flex justify-evenly rounded text-lg font-semibold'>
             <Link href={'/user/signal'}>
-              <button>Your Signal</button>
+              <button className='my-4 w-full rounded-l bg-green-900 p-4 hover:underline'>
+                Your Signal
+              </button>
             </Link>
             <Link href={'/user/joined-signal'}>
-              <button>Joined Signal</button>
+              <button className='my-4 w-full rounded-r bg-purple-900 p-4 hover:underline'>
+                Joined Signal
+              </button>
             </Link>
           </div>
 

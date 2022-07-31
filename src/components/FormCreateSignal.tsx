@@ -73,9 +73,9 @@ const FormCreateSignal = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='my-10 grid w-full grid-cols-1 gap-x-8 gap-y-4 text-xl md:grid-cols-2'
+      className='my-10 grid w-full grid-cols-1 gap-x-8 gap-y-4 rounded bg-[#16161a] p-4 text-xl text-gray-300 md:grid-cols-2 md:p-8'
     >
-      <div className='border-b-2 pb-2 text-lg'>
+      <div className='border-b border-gray-600 pb-2 text-lg'>
         <p>Chose S.O.S if you need help</p>
         <p>
           Chose Shelter if you want to inform people that you are provide a help
@@ -83,8 +83,8 @@ const FormCreateSignal = () => {
         </p>
       </div>
       <fieldset>
-        <legend>Select type signal</legend>
-        <div className='flex justify-start gap-8'>
+        <legend className='text-gray-50'>Select type signal</legend>
+        <div className='flex justify-start gap-8 text-gray-50'>
           <label className=''>
             <input
               type='radio'
@@ -107,11 +107,11 @@ const FormCreateSignal = () => {
         </div>
       </fieldset>
 
-      <div className='border-b-2 pb-2 text-lg'>
+      <div className='border-b border-gray-600 pb-2 text-lg'>
         <p>Fill in a name that you are comfortable with for people to call</p>
       </div>
       <label className='block'>
-        <span className='mb-2 block text-slate-900'>Name</span>
+        <span className='mb-2 block text-gray-50'>Name</span>
         <input
           type='text'
           {...register('author')}
@@ -122,7 +122,7 @@ const FormCreateSignal = () => {
         </p>
       </label>
 
-      <div className='border-b-2 pb-2 text-lg'>
+      <div className='border-b border-gray-600 pb-2 text-lg'>
         <p>tell your problem in the title</p>
         <p>example</p>
         <ol>
@@ -131,7 +131,7 @@ const FormCreateSignal = () => {
         </ol>
       </div>
       <label className='block'>
-        <span className='mb-2 block text-slate-900'>Title</span>
+        <span className='mb-2 block text-gray-50'>Title</span>
         <input
           type='text'
           {...register('title')}
@@ -139,7 +139,7 @@ const FormCreateSignal = () => {
         />
       </label>
 
-      <div className='border-b-2 pb-2 text-lg'>
+      <div className='border-b border-gray-600 pb-2 text-lg'>
         <p>Location where people need to gather or meet.</p>
         <p>
           Latidude, Longitude to generate Map. Latidude, Longitude is not
@@ -162,7 +162,7 @@ const FormCreateSignal = () => {
         </p>
       </div>
       <label className='block'>
-        <span className='mb-2 block text-slate-900'>Location</span>
+        <span className='mb-2 block text-gray-50'>Location</span>
         <input
           type='text'
           {...register('location')}
@@ -170,7 +170,7 @@ const FormCreateSignal = () => {
         />
 
         <div className='flex justify-between gap-x-4'>
-          <span className='block text-slate-900'>
+          <span className='block text-gray-50'>
             Latitude
             <input
               type='text'
@@ -178,7 +178,7 @@ const FormCreateSignal = () => {
               className='peer mt-2 w-full rounded-md'
             />
           </span>
-          <span className='block text-slate-900'>
+          <span className='block text-gray-50'>
             Longitude
             <input
               type='text'
@@ -189,8 +189,9 @@ const FormCreateSignal = () => {
         </div>
         <div className='flex justify-between'>
           <button
+            type='button'
             onClick={() => geoFindMe()}
-            className='my-3  rounded bg-blue-600 px-4 py-2 font-bold text-blue-50'
+            className='my-3  rounded bg-ungu px-4 py-2 font-bold text-blue-50'
           >
             Show my location
           </button>
@@ -205,14 +206,14 @@ const FormCreateSignal = () => {
         </div>
       </label>
 
-      <div className='border-b-2 pb-2 text-lg'>
+      <div className='border-b border-gray-600 pb-2 text-lg'>
         <p>
           What you provide or what you need, example: we have place for 8
           people, food and water for a week. we need clothes and medical suply
         </p>
       </div>
       <label className='block'>
-        <span className='mb-2 block text-slate-900'>Necessity</span>
+        <span className='mb-2 block text-gray-50'>Necessity</span>
         <input
           type='text'
           {...register('necessity')}
@@ -220,14 +221,15 @@ const FormCreateSignal = () => {
         />
       </label>
 
+      <div />
       {isSubmitting ? (
-        <button disabled className='bg-green-500 px-8 py-4'>
+        <button disabled className='bg-ungu px-8 py-4'>
           <Loader /> Loading
         </button>
       ) : (
         <button
           type='submit'
-          className='grid-col-[3_/_4] bg-green-500 px-8 py-4'
+          className='grid-col-[3_/_4] bg-hijau px-8 py-4'
         >
           Submit
         </button>
