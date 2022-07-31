@@ -96,7 +96,7 @@ const FormCreateSignal = () => {
         <p>Chose S.O.S if you need help</p>
         <p>
           Chose Shelter if you want to inform people that you are provide a help
-          place, medical, food or clothes , etc.
+          such a place, medical, food or clothes , etc.
         </p>
       </div>
       <fieldset>
@@ -140,7 +140,7 @@ const FormCreateSignal = () => {
       </label>
 
       <div className='border-b border-gray-600 pb-2 text-lg'>
-        <p>tell your problem in the title</p>
+        <p>Tell your problem in the title</p>
         <p>example</p>
         <ol>
           <li>1. Running out water</li>
@@ -158,16 +158,11 @@ const FormCreateSignal = () => {
 
       <div className='border-b border-gray-600 pb-2 text-lg'>
         <p>Location where people need to gather or meet.</p>
+        <br />
         <p>
-          Latidude, Longitude to generate Map. Latidude, Longitude is not
-          require but cant generate map without it
-        </p>
-        <p>
-          Use Show my location buttton to show ur current location or u cant
-          write manualy latitude, longitude
-        </p>
-        <p>
-          usefull link:{' '}
+          (optional) Latidude, Longitude to generate Map. Use Show my location
+          buttton to show ur current location or u cant write manualy latitude,
+          longitude. Usefull link:{' '}
           <a
             href='https://www.latlong.net/countries.html'
             target='_blank'

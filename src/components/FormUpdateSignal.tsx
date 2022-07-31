@@ -104,7 +104,7 @@ const FormUpdateSignal: React.FC<FormUpdateSignalProps> = ({
         <p>Chose S.O.S if you need help</p>
         <p>
           Chose Shelter if you want to inform people that you are provide a help
-          place, medical, food or clothes , etc.
+          such a place, medical, food or clothes , etc.
         </p>
       </div>
       <fieldset>
@@ -140,7 +140,7 @@ const FormUpdateSignal: React.FC<FormUpdateSignalProps> = ({
         <input
           type='text'
           {...register('author')}
-          className='peer text-hitam w-full rounded-md'
+          className='peer w-full rounded-md text-hitam'
         />
         <p className='invisible mt-2 text-pink-600 peer-invalid:visible'>
           Please provide a name
@@ -160,27 +160,22 @@ const FormUpdateSignal: React.FC<FormUpdateSignalProps> = ({
         <input
           type='text'
           {...register('title')}
-          className='peer text-hitam w-full rounded-md'
+          className='peer w-full rounded-md text-hitam'
         />
       </label>
 
       <div className='border-b-2 pb-2 text-lg'>
         <p>Location where people need to gather or meet.</p>
+        <br />
         <p>
-          Latidude, Longitude to generate Map. Latidude, Longitude is not
-          require but cant generate map without it
-        </p>
-        <p>
-          Use Show my location buttton to show ur current location or u cant
-          write manualy latitude, longitude
-        </p>
-        <p>
-          usefull link:{' '}
+          (optional) Latidude, Longitude to generate Map. Use Show my location
+          buttton to show ur current location or u cant write manualy latitude,
+          longitude. Usefull link:{' '}
           <a
             href='https://www.latlong.net/countries.html'
             target='_blank'
             rel='noopener noreferrer'
-            className='text-blue-900 hover:underline'
+            className='text-blue-400 hover:underline'
           >
             www.latlong.net
           </a>
@@ -191,7 +186,7 @@ const FormUpdateSignal: React.FC<FormUpdateSignalProps> = ({
         <input
           type='text'
           {...register('location')}
-          className='peer text-hitam mb-2 w-full rounded-md'
+          className='peer mb-2 w-full rounded-md text-hitam'
         />
 
         <div className='flex justify-between gap-x-4'>
@@ -200,7 +195,7 @@ const FormUpdateSignal: React.FC<FormUpdateSignalProps> = ({
             <input
               type='text'
               {...register('lat')}
-              className='peer text-hitam mt-2 w-full rounded-md'
+              className='peer mt-2 w-full rounded-md text-hitam'
             />
           </span>
           <span className='block text-slate-900'>
@@ -208,7 +203,7 @@ const FormUpdateSignal: React.FC<FormUpdateSignalProps> = ({
             <input
               type='text'
               {...register('long')}
-              className='peer text-hitam mt-2 w-full rounded-md'
+              className='peer mt-2 w-full rounded-md text-hitam'
             />
           </span>
         </div>
@@ -241,10 +236,10 @@ const FormUpdateSignal: React.FC<FormUpdateSignalProps> = ({
         <input
           type='text'
           {...register('necessity')}
-          className='peer text-hitam w-full rounded-md'
+          className='peer w-full rounded-md text-hitam'
         />
       </label>
-      
+
       <div />
       {isSubmitting ? (
         <button disabled className='bg-green-500 px-8 py-4'>
