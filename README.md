@@ -18,7 +18,7 @@
 - **Map**: [Leaflet](https://leafletjs.com/), [react-leaflet](https://react-leaflet.js.org/)
 - **Deployment**: [Vercel](https://vercel.com)
 
-![DB Diagram](https://raw.githubusercontent.com/arzivre/signal-sos/main/dbdiagram.png)
+![DB Diagram](https://signal-sos.vercel.app/dbdiagram.png)
 
 ## Running Locally
 ```
