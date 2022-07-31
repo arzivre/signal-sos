@@ -18,7 +18,9 @@ const User: React.FC = () => {
   if (status === 'unauthenticated') {
     return (
       <li>
-        <button onClick={() => signIn()}>Sign In to Create Signal</button>
+        <Link href='/signin'>
+          <a>Sign In to Create Signal</a>
+        </Link>
       </li>
     )
   }

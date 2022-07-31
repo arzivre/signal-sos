@@ -13,8 +13,8 @@ export default function SignIn({ csrfToken }: { csrfToken: string }) {
           border-black bg-hitam p-4 text-gray-50 md:p-8'
         >
           <button
-            onClick={() => signIn('google')}
-            className='w-full mb-4 font-semibold border-2 border-black bg-gray-50 px-4 py-3 
+            onClick={() => signIn('google', { callbackUrl: '/' })}
+            className='mb-4 w-full border-2 border-black bg-gray-50 px-4 py-3 font-semibold 
               text-gray-900 hover:bg-gray-400'
           >
             <span className='flex justify-center'>
