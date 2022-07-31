@@ -53,7 +53,6 @@ const JoinedSignalPage = () => {
             </button>
           </Link>
         </div>
-        {data.length > 0 ? (
           <>
             <section className='grid grid-cols-1 text-xl font-semibold md:gap-x-8'>
               <ul>
@@ -93,20 +92,6 @@ const JoinedSignalPage = () => {
               dataLength={data.length}
             />
           </>
-        ) : (
-          <div>
-            <p>No Data</p>
-            {indexJoinedSignal > 0 ? (
-              <button
-                onClick={() => setIndexJoinedSignal(indexJoinedSignal - 1)}
-              >
-                Go Back
-              </button>
-            ) : (
-              <div />
-            )}
-          </div>
-        )}
       </main>
     </Layout>
   )
