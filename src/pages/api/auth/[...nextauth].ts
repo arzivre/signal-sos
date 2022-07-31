@@ -81,6 +81,9 @@ export const authOptions: NextAuthOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET,
   events: { createUser: sendWelcomeEmail },
+  pages: {
+    signIn: '/signin',
+  },
 }
 
 export default NextAuth(authOptions)
