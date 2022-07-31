@@ -41,8 +41,8 @@ const User: React.FC = () => {
       <Suspense fallback={<Loader />}>
         <li>{user?.name || user?.email}</li>
       </Suspense>
-
-      <li>
+      <br />
+      <li className='w-full'>
         <button
           onClick={() => signOut()}
           className='hover:text-rose-600 hover:underline'
@@ -74,7 +74,7 @@ const Header = () => {
             </h1>
           </a>
         </Link>
-        <ul className='grid grid-cols-[1fr_auto] gap-x-6 gap-y-2 whitespace-nowrap md:flex md:justify-start'>
+        <ul className='grid grid-cols-2 gap-x-6 gap-y-2 whitespace-nowrap md:flex md:justify-start'>
           <li>
             <Link href='/'>
               <a className='hover:underline'>Home</a>
