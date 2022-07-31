@@ -68,7 +68,7 @@ const FormPeopleJoinSignal: React.FC<{
         <span className='mb-2 block font-medium '>Name</span>
         <input
           type='text'
-          {...register('name')}
+          {...register('name', { required: true })}
           className='peer w-full rounded-md'
         />
       </label>

@@ -3,6 +3,7 @@ import { useSession } from 'next-auth/react'
 import React, { Dispatch, SetStateAction, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import Loader from 'src/components/Loader'
+import { mutate } from 'swr'
 
 interface FormUpdateSignalProps {
   data?: Signal
@@ -82,6 +83,7 @@ const FormUpdateSignal: React.FC<FormUpdateSignalProps> = ({
       method: 'PUT',
       body: JSON.stringify(formData),
     })
+    mutate(`/api/user/${data?.id}`)
     setUpdate(false)
   }
 
@@ -138,7 +140,7 @@ const FormUpdateSignal: React.FC<FormUpdateSignalProps> = ({
         <input
           type='text'
           {...register('author')}
-          className='peer w-full rounded-md'
+          className='peer text-hitam w-full rounded-md'
         />
         <p className='invisible mt-2 text-pink-600 peer-invalid:visible'>
           Please provide a name
@@ -158,7 +160,7 @@ const FormUpdateSignal: React.FC<FormUpdateSignalProps> = ({
         <input
           type='text'
           {...register('title')}
-          className='peer w-full rounded-md'
+          className='peer text-hitam w-full rounded-md'
         />
       </label>
 
@@ -178,7 +180,7 @@ const FormUpdateSignal: React.FC<FormUpdateSignalProps> = ({
             href='https://www.latlong.net/countries.html'
             target='_blank'
             rel='noopener noreferrer'
-            className='text-blue-400 hover:underline'
+            className='text-blue-900 hover:underline'
           >
             www.latlong.net
           </a>
@@ -189,7 +191,7 @@ const FormUpdateSignal: React.FC<FormUpdateSignalProps> = ({
         <input
           type='text'
           {...register('location')}
-          className='peer mb-2 w-full rounded-md'
+          className='peer text-hitam mb-2 w-full rounded-md'
         />
 
         <div className='flex justify-between gap-x-4'>
@@ -198,7 +200,7 @@ const FormUpdateSignal: React.FC<FormUpdateSignalProps> = ({
             <input
               type='text'
               {...register('lat')}
-              className='peer mt-2 w-full rounded-md'
+              className='peer text-hitam mt-2 w-full rounded-md'
             />
           </span>
           <span className='block text-slate-900'>
@@ -206,14 +208,14 @@ const FormUpdateSignal: React.FC<FormUpdateSignalProps> = ({
             <input
               type='text'
               {...register('long')}
-              className='peer mt-2 w-full rounded-md'
+              className='peer text-hitam mt-2 w-full rounded-md'
             />
           </span>
         </div>
         <div className='flex justify-between'>
           <button
             onClick={() => geoFindMe()}
-            className='my-3  rounded bg-blue-600 px-4 py-2 font-bold text-blue-50'
+            className='my-3  rounded bg-blue-900 px-4 py-2 font-bold text-blue-50'
           >
             Show my location
           </button>
@@ -239,7 +241,7 @@ const FormUpdateSignal: React.FC<FormUpdateSignalProps> = ({
         <input
           type='text'
           {...register('necessity')}
-          className='peer w-full rounded-md'
+          className='peer text-hitam w-full rounded-md'
         />
       </label>
       

@@ -1,8 +1,9 @@
 import { Signal as SignalFormInput } from '@prisma/client'
-import { useForm, SubmitHandler } from 'react-hook-form'
-import Loader from 'src/components/Loader'
-import { useSession } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import Loader from 'src/components/Loader'
 
 interface GeoLocation {
   status: string
@@ -11,6 +12,7 @@ interface GeoLocation {
 }
 const FormCreateSignal = () => {
   const { data: session, status } = useSession()
+  const router = useRouter()
 
   const [geoLocation, setGeoLocation] = useState<GeoLocation>({
     status: 'loading',
@@ -60,15 +62,30 @@ const FormCreateSignal = () => {
     // Add userId
     data.userId = session?.user?.id!
     // Post
-    const response = await fetch(`/api/user/${session?.user?.id}`, {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-      body: JSON.stringify(data),
-    })
+    try {
+      await fetch(`/api/user/${session?.user?.id}`, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        body: JSON.stringify(data),
+      })
+    } catch (error) {
+      console.error(error)
+    }
+    router.push('/user/signal')
   }
+
+  if (status === 'unauthenticated')
+    return (
+      <button
+        onClick={() => signIn()}
+        className='text-center text-xl text-white hover:underline'
+      >
+        Sign In
+      </button>
+    )
 
   return (
     <form
@@ -114,8 +131,8 @@ const FormCreateSignal = () => {
         <span className='mb-2 block text-gray-50'>Name</span>
         <input
           type='text'
-          {...register('author')}
-          className='peer w-full rounded-md'
+          {...register('author', { required: true })}
+          className='peer w-full rounded-md text-hitam'
         />
         <p className='invisible mt-2 text-pink-600 peer-invalid:visible'>
           Please provide a name
@@ -134,8 +151,8 @@ const FormCreateSignal = () => {
         <span className='mb-2 block text-gray-50'>Title</span>
         <input
           type='text'
-          {...register('title')}
-          className='peer w-full rounded-md'
+          {...register('title', { required: true })}
+          className='peer w-full rounded-md text-hitam'
         />
       </label>
 
@@ -165,8 +182,8 @@ const FormCreateSignal = () => {
         <span className='mb-2 block text-gray-50'>Location</span>
         <input
           type='text'
-          {...register('location')}
-          className='peer mb-2 w-full rounded-md'
+          {...register('location', { required: true })}
+          className='peer mb-2 w-full rounded-md text-hitam'
         />
 
         <div className='flex justify-between gap-x-4'>
@@ -175,7 +192,7 @@ const FormCreateSignal = () => {
             <input
               type='text'
               {...register('lat')}
-              className='peer mt-2 w-full rounded-md'
+              className='peer mt-2 w-full rounded-md text-hitam'
             />
           </span>
           <span className='block text-gray-50'>
@@ -183,7 +200,7 @@ const FormCreateSignal = () => {
             <input
               type='text'
               {...register('long')}
-              className='peer mt-2 w-full rounded-md'
+              className='peer mt-2 w-full rounded-md text-hitam'
             />
           </span>
         </div>
@@ -216,8 +233,8 @@ const FormCreateSignal = () => {
         <span className='mb-2 block text-gray-50'>Necessity</span>
         <input
           type='text'
-          {...register('necessity')}
-          className='peer w-full rounded-md'
+          {...register('necessity', { required: true })}
+          className='peer w-full rounded-md text-hitam'
         />
       </label>
 
@@ -229,7 +246,7 @@ const FormCreateSignal = () => {
       ) : (
         <button
           type='submit'
-          className='grid-col-[3_/_4] bg-hijau px-8 py-4'
+          className='grid-col-[3_/_4] bg-hijau px-8 py-4 font-semibold text-white'
         >
           Submit
         </button>

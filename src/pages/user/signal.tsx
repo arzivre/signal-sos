@@ -28,8 +28,10 @@ const UserCreatedSignal = () => {
   )
 
   const deleteSignal = async (id: string) => {
-    await fetch(`/api/user/${id}`, { method: 'DELETE' })
-    mutate(`/api/user/${id}`)
+    if (confirm('Are you sure you want to delete?')) {
+      await fetch(`/api/user/${id}`, { method: 'DELETE' })
+      mutate(`/api/user/${id}`)
+    }
   }
 
   useEffect(() => {
