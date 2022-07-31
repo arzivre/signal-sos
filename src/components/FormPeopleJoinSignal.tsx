@@ -55,7 +55,9 @@ const FormPeopleJoinSignal: React.FC<{
         onClick={() => setShowForm(!showForm)}
         className='my-4 rounded-sm bg-green-900 px-4 py-2 text-gray-50'
       >
-        {type === 'sos' ? 'Send help' : 'Join shelter'}
+        {type === 'sos'
+          ? 'Send help (Join Signal)'
+          : 'Join shelter (Join Signal)'}
       </button>
     )
 
