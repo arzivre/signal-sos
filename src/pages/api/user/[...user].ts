@@ -15,16 +15,16 @@ export default async function handler(
     if (req.method === 'POST') {
       await createSignal(req, res)
     }
+    
+    if (req.method === 'PUT') {
+      await updateSignal(req, res)
+    }
 
     if (req.method === 'DELETE') {
       await deleteSignal(req, res)
     }
 
     if (req.method === 'GET') {
-      if (userQuery === 'joined' && idQuery) {
-        await getAllUserJoinedSignal(req, res)
-      }
-
       await getAllUserSignal(req, res)
     }
   } catch (error: unknown) {
@@ -37,6 +37,18 @@ const createSignal = async (req: NextApiRequest, res: NextApiResponse) => {
   const user = await prisma.signal.create({
     data: {
       id: cuid(),
+      ...req.body,
+    },
+  })
+  res.status(200).json(user)
+}
+
+const updateSignal = async (req: NextApiRequest, res: NextApiResponse) => {
+  const user = await prisma.signal.update({
+    where: {
+      id: req.query.user?.toString(),
+    },
+    data: {
       ...req.body,
     },
   })
@@ -68,33 +80,6 @@ const getAllUserSignal = async (req: NextApiRequest, res: NextApiResponse) => {
   })
 
   res.status(200).json(user)
-}
-
-const getAllUserJoinedSignal = async (
-  req: NextApiRequest,
-  res: NextApiResponse
-) => {
-  const session = await getServerSession(req, res, nextAuthOptions)
-
-  const idQuery = req.query.id?.toString()
-  const pagination = Number(idQuery) * 4
-
-  const joinedSignal = await prisma.signal.findMany({
-    skip: 1 * pagination,
-    take: 4,
-    orderBy: {
-      id: 'desc',
-    },
-    where: {
-      people: {
-        some: {
-          userId: session?.user?.id,
-        },
-      },
-    },
-  })
-
-  res.status(200).json(joinedSignal)
 }
 
 //joined?&id=12
