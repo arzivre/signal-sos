@@ -14,14 +14,13 @@ export default function SignIn({ csrfToken }: { csrfToken: string }) {
         >
           <button
             onClick={() => signIn('google')}
-            className='w-full border-2 border-black bg-gray-50 px-4 py-3 
+            className='w-full mb-4 font-semibold border-2 border-black bg-gray-50 px-4 py-3 
               text-gray-900 hover:bg-gray-400'
           >
             <span className='flex justify-center'>
               Sign in with Google <FcGoogle size={24} className='ml-2' />
             </span>
           </button>
-          <br />
           <hr />
           <form
             method='post'
@@ -31,11 +30,16 @@ export default function SignIn({ csrfToken }: { csrfToken: string }) {
             <input name='csrfToken' type='hidden' defaultValue={csrfToken} />
             <label className='my-4'>
               <span className='mb-1 block'>Email address </span>
-              <input type='email' id='email' name='email' className='w-full text-black' />
+              <input
+                type='email'
+                id='email'
+                name='email'
+                className='w-full text-black'
+              />
             </label>
             <button
               type='submit'
-              className='border-2 border-black bg-gray-500 py-2 text-hitam hover:bg-white'
+              className='border-2 border-black bg-gray-500 py-2 font-semibold text-white hover:bg-white hover:text-hitam'
             >
               Sign in with Email
             </button>
