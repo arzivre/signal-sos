@@ -68,7 +68,7 @@ const SignalDetailCard: React.FC<Signal> = (props) => {
         <ul className='grid grid-cols-[auto_auto_auto_auto]'>
           {people?.map(({ id, name }) => (
             <li key={id} title={name} className='rounded-sm px-4'>
-              <p>{name}</p>
+              <p>{name},</p>
             </li>
           ))}
         </ul>
@@ -76,7 +76,7 @@ const SignalDetailCard: React.FC<Signal> = (props) => {
         <ul className='grid grid-cols-[auto_auto_auto_auto]'>
           {people?.map(({ id, items }) => (
             <li key={id} className='rounded-sm px-4'>
-              <p>{items}</p>
+              <p>{items},</p>
             </li>
           ))}
         </ul>
