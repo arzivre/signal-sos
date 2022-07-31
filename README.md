@@ -1,12 +1,13 @@
-# Signal SOS
-What is this repo or project?
-web to help team rescue or people where to go , or tell survivor you provide shellter and other help and nesecesity
-How does it work?
-create signal sos or shellter, team rescue will go to signal sos and survivo will gather to shellter
-Who will use this repo or project?
-team recue , voulentessr, survivor
-What is the goal of this project?
-connect people team rescue survivor when natural disasster happen, crissis
+# [Signal SOS](https://signal-sos.vercel.app/)
+- Signal SOS is initially made for the [hashnode x PlanetScale hackathon](https://townhall.hashnode.com/planetscale-hackathon?source=hashnode_countdown)
+- What is this repo or project?
+    This app is made to connect community when something like natural  disaster happen, people who need help can create signal SOS, and people who provide help can create signal SHELTER so peoplea know where to get help and other nesecesity
+- How does it work?
+    create signal sos or shellter, team rescue will go to signal sos and survivo will gather to shellter
+- Who will use this repo or project?
+    team rescue , survivor
+- What is the goal of this project?
+    connect community, team rescue and victim when natural disaster happen
 
 ## Tech Stack
 - **Framework**: [Next.js](https://nextjs.org/)
@@ -31,9 +32,9 @@ To run this project, you will need create a .env file similar to .env.example.
 ## Author
 Muhammad Sony Fauzi
 
-Hashnode post:
-Website: https://www.arzivre.com
-Twitter: @arzivre
-Github: @arzivre
+- Hashnode post:
+- Website: https://www.arzivre.com
+- Twitter: [@arzivre](https://twitter.com/arzivre)
+- Github: [@arzivre](https://github.com/arzivre)
 
 Give a ⭐️ if this project helped you!
