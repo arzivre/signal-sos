@@ -75,7 +75,7 @@ const SignalDetailCard: React.FC<Signal> = (props) => {
         <p className='mt-2 text-gray-200'>Items Donated</p>
         <ul className='grid grid-cols-[auto_auto_auto_auto]'>
           {people?.map(({ id, items }) => (
-            <li key={id} title={items} className='rounded-sm px-4'>
+            <li key={id} className='rounded-sm px-4'>
               <p>{items}</p>
             </li>
           ))}

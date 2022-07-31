@@ -1,4 +1,5 @@
 import type { People, TypeSignal } from '@prisma/client'
+import { useSession, signIn } from 'next-auth/react'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { mutate } from 'swr'
@@ -11,6 +12,7 @@ const FormPeopleJoinSignal: React.FC<{
   isJoined: People | undefined
 }> = ({ id, type, isJoined }) => {
   const [showForm, setShowForm] = useState(false)
+  const { status } = useSession()
 
   const {
     reset,
@@ -36,6 +38,16 @@ const FormPeopleJoinSignal: React.FC<{
   }
 
   if (isJoined) return <p>You already join</p>
+
+  if (status === 'unauthenticated')
+    return (
+      <button
+        onClick={() => signIn()}
+        className='mt-4 text-center text-xl text-green-400 hover:underline'
+      >
+        Sign In Join
+      </button>
+    )
 
   if (!showForm)
     return (

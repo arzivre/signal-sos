@@ -1,6 +1,7 @@
 import autoAnimate from '@formkit/auto-animate'
 import type { Signal } from '@prisma/client'
 import type { NextPage } from 'next'
+import { useSession, signIn } from 'next-auth/react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { Suspense, useEffect, useRef, useState } from 'react'
@@ -13,6 +14,8 @@ import useSWR, { mutate } from 'swr'
 import { SignalCard } from '..'
 
 const UserCreatedSignal = () => {
+  const { status } = useSession()
+
   const [paginationIndex, setPaginationIndex] = useState(0)
   const [update, setUpdate] = useState<boolean>(false)
   const [dataIndex, setDataIndex] = useState<number>(0)
@@ -36,6 +39,16 @@ const UserCreatedSignal = () => {
   if (error) return <div>failed to load</div>
 
   if (!data) return <div>loading...</div>
+
+  if (status === 'unauthenticated')
+    return (
+      <button
+        onClick={() => signIn()}
+        className='text-center text-xl text-white hover:underline'
+      >
+        Sign In
+      </button>
+    )
 
   return (
     <>

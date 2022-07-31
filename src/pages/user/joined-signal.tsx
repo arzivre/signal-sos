@@ -1,4 +1,5 @@
 import type { People, Signal } from '@prisma/client'
+import { signIn, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useState } from 'react'
 import Layout from 'src/components/Layout'
@@ -11,6 +12,8 @@ type SignalAndPeople = Signal & {
   people: [People]
 }
 const JoinedSignalPage = () => {
+  const { status } = useSession()
+
   const [indexJoinedSignal, setIndexJoinedSignal] = useState(0)
 
   const { data = [], error } = useSWR<[SignalAndPeople]>(
@@ -21,6 +24,16 @@ const JoinedSignalPage = () => {
   if (error) return <div>failed to load</div>
 
   if (!data) return <div>loading...</div>
+
+  if (status === 'unauthenticated')
+    return (
+      <button
+        onClick={() => signIn()}
+        className='text-center text-xl text-white hover:underline'
+      >
+        Sign In
+      </button>
+    )
 
   return (
     <Layout>
@@ -42,7 +55,7 @@ const JoinedSignalPage = () => {
         </div>
         {data.length > 0 ? (
           <>
-            <section className='grid grid-cols-1 md:gap-x-8 text-xl font-semibold'>
+            <section className='grid grid-cols-1 text-xl font-semibold md:gap-x-8'>
               <ul>
                 {data.map((signal) => (
                   <li
@@ -65,7 +78,7 @@ const JoinedSignalPage = () => {
                     <p>Items Donated</p>
                     <ul className='grid grid-cols-[auto_auto_auto_auto]'>
                       {signal.people?.map(({ id, items }) => (
-                        <li key={id} title={items} className='rounded-sm px-4'>
+                        <li key={id} className='rounded-sm px-4'>
                           <p>{items}</p>
                         </li>
                       ))}
