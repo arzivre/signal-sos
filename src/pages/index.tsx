@@ -92,14 +92,14 @@ const SignalDetailCard: React.FC<Signal> = (props) => {
 
 export const SignalCard: React.FC<Signal> = (props) => {
   return (
-    <div className='grid grid-cols-[1fr_auto]'>
+    <div className='grid grid-cols-1 md:grid-cols-[1fr_auto]'>
       <div
         className={`text-lg font-semibold ${
           props.type === 'sos' ? 'text-gray-100' : 'text-gray-900'
         }`}
       >
         <p
-          className={`mb-1 text-2xl text-gray-50
+          className={`line-clamp mb-1 text-2xl text-gray-50
         ${props.type === 'sos' ? null : 'text-gray-900'}`}
         >
           {props.title}
@@ -111,7 +111,7 @@ export const SignalCard: React.FC<Signal> = (props) => {
       <div className='grid grid-rows-[1fr_auto_1fr]'>
         <div />
         <p
-          className={`mr-4 p-2 text-right text-[calc(1em+1vw)] font-bold text-slate-900 
+          className={`mr-4 p-2 text-center font-bold text-slate-900 md:text-right md:text-[calc(1em+1vw)] 
           ${props.type === 'sos' ? null : 'text-green-500'}
           `}
         >

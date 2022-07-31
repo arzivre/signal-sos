@@ -27,12 +27,12 @@ const User: React.FC = () => {
     <>
       <li>
         <Link href='/user/create'>
-          <a>Create Signal</a>
+          <a className='hover:underline'>Create Signal</a>
         </Link>
       </li>
       <li>
         <Link href='/user/signal'>
-          <a>Your Signal</a>
+          <a className='hover:underline'>Your Signal</a>
         </Link>
       </li>
 
@@ -41,7 +41,12 @@ const User: React.FC = () => {
       </Suspense>
 
       <li>
-        <button onClick={() => signOut()}>sign Out</button>
+        <button
+          onClick={() => signOut()}
+          className='hover:text-rose-600 hover:underline'
+        >
+          sign Out
+        </button>
       </li>
     </>
   )
@@ -49,20 +54,33 @@ const User: React.FC = () => {
 
 const Header = () => {
   return (
-    <header className='container mx-auto max-w-7xl px-4 text-gray-50'>
-      <h1 className='mb-1 text-[calc(1em+2vh)] md:hidden'>Signal SOS</h1>
+    <header className='container mx-auto max-w-7xl px-4 text-2xl text-gray-50'>
+      <Link href='/'>
+        <a className='hover:underline'>
+          <h1 className='my-4 font-serif text-[calc(1em+2vh)] md:hidden'>
+            Signal <span className='text-orange-600'> SOS</span>
+          </h1>
+        </a>
+      </Link>
 
       <nav className=''>
-        <h1 className='hidden text-[calc(1em+2vh)] md:block'>Signal SOS</h1>
-        <ul className='grid grid-cols-[1fr_auto] gap-x-6 whitespace-nowrap md:flex md:justify-start'>
+        <Link href='/'>
+          <a className='hover:underline'>
+            <h1 className='my-4 hidden font-serif text-[calc(1em+2vh)] md:block'>
+              Signal
+              <span className='text-orange-600'> SOS</span>
+            </h1>
+          </a>
+        </Link>
+        <ul className='grid grid-cols-[1fr_auto] gap-x-6 gap-y-2 whitespace-nowrap md:flex md:justify-start'>
           <li>
             <Link href='/'>
-              <a>Home</a>
+              <a className='hover:underline'>Home</a>
             </Link>
           </li>
           <li>
             <Link href='/about'>
-              <a>About</a>
+              <a className='hover:underline'>About</a>
             </Link>
           </li>
 
