@@ -34,7 +34,7 @@ To run this project, you will need create a .env file similar to .env.example.
 ## Author
 Muhammad Sony Fauzi
 
-- Hashnode post:
+- Hashnode post: [Signal SOS - Connect Community, Team Rescue and Victim When Natural Disaster Happen](https://arzivre.hashnode.dev/signal-sos-connect-community-team-rescue-and-victim-when-natural-disaster-happen)
 - Website: https://www.arzivre.com
 - Twitter: [@arzivre](https://twitter.com/arzivre)
 - Github: [@arzivre](https://github.com/arzivre)
