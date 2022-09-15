@@ -11,7 +11,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@formkit/auto-animate": "^1.0.0-beta.1",
+    "@formkit/auto-animate": "^1.0.0-beta.3",
     "@next-auth/prisma-adapter": "^1.0.4",
     "@prisma/client": "^4.3.1",
     "cuid": "^2.1.8",
