@@ -28,7 +28,7 @@ const Pagination: React.FC<PaginationProps> = ({
       )}
       {state > 0 ? <p> {state + 1} </p> : null}
       {dataLength === 0 ? (
-        <h3>{state === 1 ? 'Loading ...' : 'Thats all we got'}</h3>
+        <h3>{state === 0 ? 'Loading ...' : 'Thats all we got'}</h3>
       ) : (
         <button
           className='w-full hover:underline'
