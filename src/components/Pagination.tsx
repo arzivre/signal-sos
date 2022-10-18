@@ -18,7 +18,7 @@ const Pagination: React.FC<PaginationProps> = ({
     >
       {state > 0 ? (
         <button
-          className='hover:underline w-full'
+          className='w-full hover:underline'
           onClick={() => setState(state - 1)}
         >
           Previous Page
@@ -28,10 +28,10 @@ const Pagination: React.FC<PaginationProps> = ({
       )}
       {state > 0 ? <p> {state + 1} </p> : null}
       {dataLength === 0 ? (
-        <h3>Thats all we got</h3>
+        <h3>{state === 1 ? 'Loading ...' : 'Thats all we got'}</h3>
       ) : (
         <button
-          className='hover:underline w-full'
+          className='w-full hover:underline'
           disabled={dataLength === 0}
           onClick={() => setState(state + 1)}
         >
