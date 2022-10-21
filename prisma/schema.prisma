@@ -3,7 +3,6 @@
 
 generator client {
     provider        = "prisma-client-js"
-    previewFeatures = ["referentialIntegrity"]
 }
 
 // generator dbml {
@@ -11,8 +10,7 @@ generator client {
 // }
 
 datasource db {
-    provider             = "mysql"
-    referentialIntegrity = "prisma"
+    provider             = "postgresql"
     url                  = env("DATABASE_URL")
 }
 
