@@ -2232,10 +2232,10 @@ uuid@^8.3.2:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
 
-valtio@^1.7.4:
-  version "1.7.4"
-  resolved "https://registry.yarnpkg.com/valtio/-/valtio-1.7.4.tgz#07d9b1d4b4f49120474c4b861f0a1425ae3a2bb5"
-  integrity sha512-x8N7I7hfIlRHQyRe8cx3QJsEYdzMHb12HYUGIDjPruEwLrMpegvS8iZDk4PZ/i8HgeiOPF7Qr78Ke3HA1CGu9A==
+valtio@^1.7.5:
+  version "1.7.5"
+  resolved "https://registry.yarnpkg.com/valtio/-/valtio-1.7.5.tgz#02a3ee207b4c7552294bbccb68d5f73c9f60302f"
+  integrity sha512-YGgYA1fkjDWIJuI2Z178GWxocd7f+AGfwe7vSL9+WKWfQuzWBEMqIIZ2UnEuy58DpEOYFSQTLfxQGOFIatEpmQ==
   dependencies:
     proxy-compare "2.3.0"
     use-sync-external-store "1.2.0"
