@@ -18,7 +18,7 @@
     "handlebars": "^4.7.7",
     "leaflet": "^1.9.2",
     "next": "12.3.1",
-    "next-auth": "^4.14.0",
+    "next-auth": "^4.16.3",
     "nodemailer": "^6.8.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
