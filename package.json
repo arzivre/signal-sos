@@ -13,7 +13,7 @@
   "dependencies": {
     "@formkit/auto-animate": "^1.0.0-beta.3",
     "@next-auth/prisma-adapter": "^1.0.5",
-    "@prisma/client": "^4.5.0",
+    "@prisma/client": "^4.6.1",
     "cuid": "^2.1.8",
     "handlebars": "^4.7.7",
     "leaflet": "^1.9.2",
